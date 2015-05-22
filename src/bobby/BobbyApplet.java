@@ -23,6 +23,7 @@ public class BobbyApplet extends JApplet {
 		
 		// begin test
 		sm.add(new Player());
+		this.addKeyListener(new KeyHandler(sm));
 		// end of test
 	}
 	
