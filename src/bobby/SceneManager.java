@@ -46,4 +46,12 @@ public class SceneManager extends Thread {
 		list.remove(so);
 	}
 	
+	Player getPlayer() {
+		for (SceneObject so : list)
+			if (so instanceof Player)
+				return (Player)so;
+		
+		return null;
+	}
+	
 }

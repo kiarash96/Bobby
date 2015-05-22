@@ -20,6 +20,10 @@ public class BobbyApplet extends JApplet {
 		setSize(WIDTH, HEIGHT);
 		setFocusable(true);
 		requestFocus();
+		
+		// begin test
+		sm.add(new Player());
+		// end of test
 	}
 	
 	@Override

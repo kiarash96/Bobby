@@ -8,7 +8,7 @@ import java.awt.Graphics;
  */
 public abstract class SceneObject {
 	
-	private int x, y;
+	protected int x, y;
 
 	public SceneObject() {
 		
