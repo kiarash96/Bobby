@@ -30,4 +30,12 @@ public class SceneManager extends Thread {
 			parent.repaint();
 	}
 	
+	public void add(SceneObject so) {
+		list.add(so);
+	}
+	
+	public void remove(SceneObject so) {
+		list.remove(so);
+	}
+	
 }
