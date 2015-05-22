@@ -11,11 +11,11 @@ public class BobbyApplet extends JApplet {
 	
 	private final int WIDTH = 1024, HEIGHT = 768;
 	
-	private ScreenManager sm;
+	private SceneManager sm;
 	
 	@Override
 	public void init() {
-		sm = new ScreenManager(this);
+		sm = new SceneManager(this);
 		
 		setSize(WIDTH, HEIGHT);
 		setFocusable(true);
