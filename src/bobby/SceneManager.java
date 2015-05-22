@@ -1,5 +1,6 @@
 package bobby;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import javax.swing.JApplet;
@@ -20,8 +21,15 @@ public class SceneManager extends Thread {
 	
 	public void draw(Graphics g) {
 		// TODO: implement double buffering
+		
+		// clear the screen
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, parent.getWidth(), parent.getHeight());
+		
 		for (SceneObject sobject : list)
 			sobject.draw(g);
+		
+		// TODO: sleep
 	}
 	
 	@Override
