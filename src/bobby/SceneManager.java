@@ -3,10 +3,12 @@ package bobby;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JApplet;
+import javax.swing.JFrame;
 
 /**
  *
@@ -16,14 +18,14 @@ public class SceneManager extends Thread {
 	
 	Image buffer; // second buffer
 	
-	private final JApplet parent;
+	private final JFrame parent;
 	private ArrayList<SceneObject> list;
 	
-	public SceneManager(JApplet parent) {
+	public SceneManager(JFrame parent) {
 		list = new ArrayList<>();
 		this.parent = parent;
 		
-		buffer = parent.createImage(parent.getWidth(), parent.getHeight());
+		buffer = new BufferedImage(parent.getWidth(), parent.getHeight(), BufferedImage.TYPE_INT_BGR);
 	}
 	
 	public void draw(Graphics g) {
