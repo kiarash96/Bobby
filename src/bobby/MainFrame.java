@@ -9,9 +9,10 @@ import javax.swing.JFrame;
  */
 public class MainFrame extends JFrame {
 	
-	private final int WIDTH = 1024, HEIGHT = 768;
+	public static final int WIDTH = 1024, HEIGHT = 768;
 	private SceneManager sm;
-	
+	private ScreenPainter painter;
+	private KeyHandler kHandler;
 	
 	public MainFrame() {
 		super();
@@ -24,19 +25,23 @@ public class MainFrame extends JFrame {
 		this.setFocusable(true);
 		this.requestFocus();
 		
-		sm = new SceneManager(this);
+		sm = new SceneManager();
+		painter = new ScreenPainter(this);
+		
+		kHandler = new KeyHandler();
+		this.addKeyListener(kHandler);
 		
 		// begin test
-		sm.add(new Player());
-		this.addKeyListener(new KeyHandler(sm));
+		sm.add(new Player(sm, kHandler));
 		// end of test
 		
-		sm.start();
+		new Thread(sm).start();
+		new Thread(painter).start();
 	}
 	
 	@Override
 	public void paint(Graphics g) {
-		sm.draw(g);
+		painter.draw(g, sm.getObjectList());
 	}
 	
 	
