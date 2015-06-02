@@ -2,6 +2,9 @@ package bobby.main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
+import java.util.Queue;
 import javax.swing.KeyStroke;
 
 /**
@@ -10,6 +13,19 @@ import javax.swing.KeyStroke;
  */
 public class KeyHandler implements KeyListener {
 
+	private class KeyEventPair {
+		
+		private int keycode;
+		private int action;
+
+		public KeyEventPair(int keycode, int action) {
+			this.keycode = keycode;
+			this.action = action;
+		}
+	
+	}
+		
+	private Queue<KeyEventPair> eventQ;
 	private int[] keyStatus;
 	
 	public static int KEY_FREE = 0;
@@ -18,6 +34,8 @@ public class KeyHandler implements KeyListener {
 	public static int KEY_RELEASE = 3;
 	
 	public KeyHandler() {
+		eventQ = new LinkedList<>();
+		
 		// 'z' = 90
 		keyStatus = new int[90 + 1];
 	}
@@ -28,11 +46,20 @@ public class KeyHandler implements KeyListener {
 				keyStatus[i] = KEY_DOWN;
 			else if (keyStatus[i] == KEY_RELEASE)
 				keyStatus[i] = KEY_FREE;
-	}
-	
-	// utility function
-	public static int charToCode(char ch) {
-		return KeyStroke.getKeyStroke(ch, 0).getKeyCode();
+		
+		try {
+			KeyEventPair event = eventQ.remove();
+			if (event.action == KEY_PRESS && keyStatus[event.keycode] != KEY_DOWN) {
+				keyStatus[event.keycode] = KEY_PRESS;
+			}
+			else if (event.action == KEY_RELEASE) {
+				keyStatus[event.keycode] = KEY_RELEASE;
+			}
+		}
+		catch (NoSuchElementException excep) {
+			// it's okay! the queue is empty.
+		}
+		
 	}
 	
 	@Override
@@ -43,13 +70,13 @@ public class KeyHandler implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() <= 90)
-			keyStatus[e.getKeyCode()] = KEY_PRESS;
+			eventQ.add(new KeyEventPair(e.getKeyCode(), KEY_PRESS));
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() <= 90)
-			keyStatus[e.getKeyCode()] = KEY_RELEASE;
+			eventQ.add(new KeyEventPair(e.getKeyCode(), KEY_RELEASE));
 	}
 	
 	public int getKeyStatus(int keycode) {
@@ -57,7 +84,7 @@ public class KeyHandler implements KeyListener {
 	}
 	
 	public int getKeyStatus(char ch) {
-		return getKeyStatus(charToCode(ch));
+		return getKeyStatus(KeyStroke.getKeyStroke(ch, 0).getKeyCode());
 	}
 	
 }

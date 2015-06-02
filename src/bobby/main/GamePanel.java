@@ -4,6 +4,8 @@ import bobby.state.GameStateManager;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
@@ -39,7 +41,6 @@ public class GamePanel extends JPanel implements Runnable {
 		super.addNotify();
 		
 		if (thread == null) {
-			// TODO: add keyboard listeners
 			kHandler = new KeyHandler();
 			this.addKeyListener(kHandler);
 			
@@ -55,14 +56,16 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		while (running) {
 			// update
-			gsm.update();
 			kHandler.update();
+			gsm.update();
 			
 			// draw on buffer
 			gsm.draw(image.getGraphics());
 			
 			// draw on screen
 			this.getGraphics().drawImage(image, 0, 0, null);
+			
+			// TODO: sleep for fixed fps
 		}
 	}
 
