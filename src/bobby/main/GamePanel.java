@@ -43,17 +43,15 @@ public class GamePanel extends JPanel implements Runnable {
 	// TODO: add scale
 	public static final int WIDTH = 1024, HEIGHT = 768;
 	
-	private static final int FPS = 30;
+	private static final int FPS = 60;
 	
 	// Buffer image
 	private Image image;
 	
 	private GameStateManager gsm;
-	private KeyHandler kHandler;
 	
-	// game thread
-	private Thread thread;
-	private boolean running;
+	private Thread renderThread; // graphics and keyboard update thread
+	private Thread gsmThread; // logic thread
 	
 	public GamePanel() {
 		super();
@@ -68,26 +66,25 @@ public class GamePanel extends JPanel implements Runnable {
 	public void addNotify() {
 		super.addNotify();
 		
-		if (thread == null) {
-			kHandler = new KeyHandler();
-			this.addKeyListener(kHandler);
+		if (renderThread == null) {
+			this.addKeyListener(new KeyHandler());
 			
-			thread = new Thread(this);
-			thread.start();
+			renderThread = new Thread(this);
+			renderThread.start();
+		}
+		
+		if (gsmThread == null) {
+			gsm = new GameStateManager();
+			
+			gsmThread = new Thread(gsm);
+			gsmThread.start();
 		}
 	}
 	
 	@Override
 	public void run() {
-		running = true;
-		gsm = new GameStateManager();
-		
-		while (running) {
+		while (true) {
 			long start = System.nanoTime();
-			
-			// update
-			kHandler.update();
-			gsm.update();
 			
 			Graphics g = image.getGraphics();
 			

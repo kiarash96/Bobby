@@ -24,20 +24,38 @@
 
 package bobby.state;
 
+import bobby.main.KeyHandler;
 import java.awt.Graphics;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class GameStateManager {
+public class GameStateManager implements Runnable {
 
 	public void update() {
 		// TODO: put some code here!
 	}
 
-	public void draw(Graphics graphics) {
+	public void draw(Graphics g) {
 		// TODO: put some code here!
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			KeyHandler.update();
+			this.update();
+			
+			try {
+				Thread.currentThread().sleep(5);
+			}
+			catch (InterruptedException ex) {
+				Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
 	}
 	
 }

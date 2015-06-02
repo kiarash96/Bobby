@@ -57,7 +57,7 @@ public class KeyHandler implements KeyListener {
 	public static final int KEY_DOWN = 2;
 	public static final int KEY_RELEASE = 3;
 	
-	public void update() {
+	public static void update() {
 		for (int i = 0; i < keyStatus.length; i ++)
 			if (keyStatus[i] == KEY_PRESS)
 				keyStatus[i] = KEY_DOWN;
@@ -88,6 +88,8 @@ public class KeyHandler implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() <= 90)
 			eventQ.add(new KeyEventPair(e.getKeyCode(), KEY_PRESS));
+		
+		//System.err.println("Pres: " + e.getKeyCode());
 	}
 
 	@Override
