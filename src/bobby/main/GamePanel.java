@@ -19,6 +19,7 @@ public class GamePanel extends JPanel implements Runnable {
 	Image image;
 	
 	GameStateManager gsm;
+	KeyHandler kHandler;
 	
 	// game thread
 	Thread thread;
@@ -39,6 +40,8 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		if (thread == null) {
 			// TODO: add keyboard listeners
+			kHandler = new KeyHandler();
+			this.addKeyListener(kHandler);
 			
 			thread = new Thread(this);
 			thread.start();
@@ -53,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
 		while (running) {
 			// update
 			gsm.update();
-			// TODO: update keys
+			kHandler.update();
 			
 			// draw on buffer
 			gsm.draw(image.getGraphics());
