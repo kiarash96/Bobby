@@ -25,7 +25,9 @@
 package bobby.main;
 
 import bobby.state.GameStateManager;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.logging.Level;
@@ -40,6 +42,8 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	// TODO: add scale
 	public static final int WIDTH = 1024, HEIGHT = 768;
+	
+	private static final int FPS = 30;
 	
 	// Buffer image
 	private Image image;
@@ -79,17 +83,33 @@ public class GamePanel extends JPanel implements Runnable {
 		gsm = new GameStateManager();
 		
 		while (running) {
+			long start = System.nanoTime();
+			
 			// update
 			kHandler.update();
 			gsm.update();
 			
-			// draw on buffer
-			gsm.draw(image.getGraphics());
+			Graphics g = image.getGraphics();
 			
-			// draw on screen
+			// clear the buffer
+			g.setColor(Color.WHITE);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			
+			// draw on buffer
+			gsm.draw(g);
+			
+			// draw the buffer on the screen
 			this.getGraphics().drawImage(image, 0, 0, null);
 			
-			// TODO: sleep for fixed fps
+			long elapsed = System.nanoTime() - start;
+			long wait = (long)(Math.max(0.0, 1000.0/FPS - (double)(elapsed)/(1000 * 1000)));
+			
+			try {
+				Thread.sleep(wait);
+			}
+			catch (InterruptedException ex) {
+				Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		}
 	}
 
