@@ -22,50 +22,54 @@
  * THE SOFTWARE.
  */
 
-package bobby.state;
+package bobby.scene;
 
 import bobby.main.KeyHandler;
-import bobby.scene.Player;
-import bobby.scene.SceneManager;
-import java.awt.Color;
 import java.awt.Graphics;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.KeyEvent;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class GameStateManager implements Runnable {
+public class Player extends SceneObject {
 
-	Player player = new Player(new SceneManager());
+	// jump action
+	private int jumpState;
+	private int currentHeight;
+	private static final int maxJumpHeight = 100;
 	
-	public void update() {
-		// TODO: put some code here!
+	public Player(SceneManager sm) {
+		super(sm, 0, 500);
 		
-		player.update();
-	}
-
-	public void draw(Graphics g) {
-		// TODO: put some code here!
-		
-		g.setColor(Color.BLACK);
-		player.draw(g);
+		jumpState = 0;
+		currentHeight = 0;
 	}
 
 	@Override
-	public void run() {
-		while (true) {
-			KeyHandler.update();
-			this.update();
+	public void update() {
+		if (KeyHandler.getKeyStatus(KeyEvent.VK_RIGHT) > 0)
+			x ++;
+		if (KeyHandler.getKeyStatus(KeyEvent.VK_LEFT) > 0)
+			x --;
+		
+		if (KeyHandler.getKeyStatus(KeyEvent.VK_SPACE) == KeyHandler.KEY_PRESS && jumpState == 0)
+			jumpState = 1;
+		
+		if (jumpState > 0) {
+			int dy = (jumpState == 1 ? -1 : +1);
 			
-			try {
-				Thread.currentThread().sleep(5);
-			}
-			catch (InterruptedException ex) {
-				Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);
-			}
+			currentHeight += -1 * dy;
+			y += dy;
+			
+			if (currentHeight == 0 || currentHeight == maxJumpHeight)
+				jumpState = (jumpState + 1) % 3;
 		}
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		g.drawRect(x, y, 10, 50);
 	}
 	
 }
