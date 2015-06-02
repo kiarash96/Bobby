@@ -13,7 +13,7 @@ import javax.swing.KeyStroke;
  */
 public class KeyHandler implements KeyListener {
 
-	private class KeyEventPair {
+	private static class KeyEventPair {
 		
 		private int keycode;
 		private int action;
@@ -25,20 +25,13 @@ public class KeyHandler implements KeyListener {
 	
 	}
 		
-	private Queue<KeyEventPair> eventQ;
-	private int[] keyStatus;
+	private static Queue<KeyEventPair> eventQ = new LinkedList<>();
+	private static int[] keyStatus = new int[90 + 1];
 	
-	public static int KEY_FREE = 0;
-	public static int KEY_PRESS = 1;
-	public static int KEY_DOWN = 2;
-	public static int KEY_RELEASE = 3;
-	
-	public KeyHandler() {
-		eventQ = new LinkedList<>();
-		
-		// 'z' = 90
-		keyStatus = new int[90 + 1];
-	}
+	public static final int KEY_FREE = 0;
+	public static final int KEY_PRESS = 1;
+	public static final int KEY_DOWN = 2;
+	public static final int KEY_RELEASE = 3;
 	
 	public void update() {
 		for (int i = 0; i < keyStatus.length; i ++)
@@ -79,11 +72,11 @@ public class KeyHandler implements KeyListener {
 			eventQ.add(new KeyEventPair(e.getKeyCode(), KEY_RELEASE));
 	}
 	
-	public int getKeyStatus(int keycode) {
+	public static int getKeyStatus(int keycode) {
 		return keyStatus[keycode];
 	}
 	
-	public int getKeyStatus(char ch) {
+	public static int getKeyStatus(char ch) {
 		return getKeyStatus(KeyStroke.getKeyStroke(ch, 0).getKeyCode());
 	}
 	

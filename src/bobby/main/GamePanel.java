@@ -18,14 +18,14 @@ public class GamePanel extends JPanel implements Runnable {
 	public static final int WIDTH = 1024, HEIGHT = 768;
 	
 	// Buffer image
-	Image image;
+	private Image image;
 	
-	GameStateManager gsm;
-	KeyHandler kHandler;
+	private GameStateManager gsm;
+	private KeyHandler kHandler;
 	
 	// game thread
-	Thread thread;
-	boolean running;
+	private Thread thread;
+	private boolean running;
 	
 	public GamePanel() {
 		super();
