@@ -38,6 +38,8 @@ import java.util.logging.Logger;
  */
 public class GameStateManager implements Runnable {
 
+	public static final int sleepTime = 5;
+	
 	Player player = new Player(new SceneManager());
 	
 	public void update() {
@@ -60,7 +62,7 @@ public class GameStateManager implements Runnable {
 			this.update();
 			
 			try {
-				Thread.currentThread().sleep(5);
+				Thread.currentThread().sleep(sleepTime);
 			}
 			catch (InterruptedException ex) {
 				Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);

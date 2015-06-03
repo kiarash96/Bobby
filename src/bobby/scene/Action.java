@@ -24,59 +24,25 @@
 
 package bobby.scene;
 
-import bobby.main.KeyHandler;
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
+import bobby.state.GameStateManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class Player extends SceneObject {
+public abstract class Action implements Runnable {
 
-	private class JumpAction extends Action {
-		
-		private int height = 0;
-		private static final int maxHeight = 100;
-
-		@Override
-		public void run() {
-			isRunning = true;
-			
-			while (height < maxHeight) {
-				height ++;
-				Player.this.y --;
-				yield();
-			}
-			while (height > 0) {
-				height --;
-				Player.this.y ++;
-				yield();
-			}
-			
-			isRunning = false;
+	protected static boolean isRunning = false;
+	
+	protected void yield() {
+		try {
+			Thread.sleep(GameStateManager.sleepTime);
 		}
-		
-	}
-	
-	public Player(SceneManager sm) {
-		super(sm, 0, 500);
+		catch (InterruptedException ex) {
+			Logger.getLogger(SceneObject.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
-	@Override
-	public void update() {
-		if (KeyHandler.getKeyStatus(KeyEvent.VK_RIGHT) > 0)
-			x ++;
-		if (KeyHandler.getKeyStatus(KeyEvent.VK_LEFT) > 0)
-			x --;
-		
-		if (KeyHandler.getKeyStatus(KeyEvent.VK_SPACE) == KeyHandler.KEY_PRESS && JumpAction.isRunning == false)
-			new Thread(new JumpAction()).start();
-	}
-
-	@Override
-	public void draw(Graphics g) {
-		g.drawRect(x, y, 10, 50);
-	}
-	
 }
