@@ -24,6 +24,7 @@
 
 package bobby.scene;
 
+import bobby.main.GamePanel;
 import bobby.main.KeyHandler;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -60,7 +61,7 @@ public class Player extends SceneObject {
 	}
 	
 	public Player(SceneManager sm) {
-		super(sm, 0, 500);
+		super(sm, GamePanel.WIDTH/2, GamePanel.HEIGHT/2);
 	}
 
 	@Override

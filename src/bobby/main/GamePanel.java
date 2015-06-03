@@ -40,8 +40,8 @@ import javax.swing.JPanel;
  */
 public class GamePanel extends JPanel implements Runnable {
 	
-	// TODO: add scale
-	public static final int WIDTH = 1024, HEIGHT = 768;
+	public static final int SCALE = 2;
+	public static final int WIDTH = 640, HEIGHT = 480;
 	
 	private static final int FPS = 60;
 	
@@ -55,7 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public GamePanel() {
 		super();
-		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setFocusable(true);
 		requestFocus();
 		
@@ -96,7 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
 			gsm.draw(g);
 			
 			// draw the buffer on the screen
-			this.getGraphics().drawImage(image, 0, 0, null);
+			this.getGraphics().drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
 			
 			long elapsed = System.nanoTime() - start;
 			long wait = (long)(Math.max(0.0, 1000.0/FPS - (double)(elapsed)/(1000 * 1000)));
