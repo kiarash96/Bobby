@@ -24,46 +24,32 @@
 
 package bobby.state;
 
-import bobby.main.KeyHandler;
+import bobby.scene.Player;
+import bobby.scene.SceneManager;
 import java.awt.Graphics;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class GameStateManager implements Runnable {
+public class GameLevel extends GameState {
 
-	public static final int sleepTime = 5;
+	SceneManager sm;
 	
-	GameLevel level;
-	
-	public GameStateManager() {
-		level = new GameLevel();
+	public GameLevel() {
+		sm = new SceneManager();
+		
+		sm.add(new Player(sm));
 	}
 	
+	@Override
 	public void update() {
-		level.update();
-	}
-
-	public void draw(Graphics g) {
-		level.draw(g);
+		sm.update();
 	}
 
 	@Override
-	public void run() {
-		while (true) {
-			KeyHandler.update();
-			this.update();
-			
-			try {
-				Thread.currentThread().sleep(sleepTime);
-			}
-			catch (InterruptedException ex) {
-				Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
+	public void draw(Graphics g) {
+		sm.draw(g);
 	}
 	
 }

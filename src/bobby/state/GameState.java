@@ -24,46 +24,15 @@
 
 package bobby.state;
 
-import bobby.main.KeyHandler;
 import java.awt.Graphics;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class GameStateManager implements Runnable {
-
-	public static final int sleepTime = 5;
+public abstract class GameState {
 	
-	GameLevel level;
-	
-	public GameStateManager() {
-		level = new GameLevel();
-	}
-	
-	public void update() {
-		level.update();
-	}
-
-	public void draw(Graphics g) {
-		level.draw(g);
-	}
-
-	@Override
-	public void run() {
-		while (true) {
-			KeyHandler.update();
-			this.update();
-			
-			try {
-				Thread.currentThread().sleep(sleepTime);
-			}
-			catch (InterruptedException ex) {
-				Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-	}
+	public abstract void update();
+	public abstract void draw(Graphics g);
 	
 }
