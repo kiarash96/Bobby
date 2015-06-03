@@ -53,6 +53,8 @@ public class GamePanel extends JPanel implements Runnable {
 	private Thread renderThread; // graphics and keyboard update thread
 	private Thread gsmThread; // logic thread
 	
+	private boolean init;
+	
 	public GamePanel() {
 		super();
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -60,24 +62,25 @@ public class GamePanel extends JPanel implements Runnable {
 		requestFocus();
 		
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_BGR);
+		
+		init = false;
 	}
 
 	@Override
 	public void addNotify() {
 		super.addNotify();
 		
-		if (renderThread == null) {
+		if (init == false) {
 			this.addKeyListener(new KeyHandler());
-			
-			renderThread = new Thread(this);
-			renderThread.start();
-		}
-		
-		if (gsmThread == null) {
 			gsm = new GameStateManager();
-			
+
 			gsmThread = new Thread(gsm);
 			gsmThread.start();
+
+			renderThread = new Thread(this);
+			renderThread.start();
+
+			init = true;
 		}
 	}
 	
