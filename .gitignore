@@ -1,0 +1,11 @@
+build/
+dist/
+nbproject/
+nbbuild/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+.nb-gradle/
+applet.policy
+build.xml
+manifest.mf
