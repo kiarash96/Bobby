@@ -67,12 +67,12 @@ public class Player extends SceneObject {
 		jumpStatus = 0;
 		currentJumpHeight = 0;
 		
-		idleAnimation = new Animation("rc/player/anim", "idle", 2, 100);
-		runAnimation = new Animation("rc/player/anim", "run", 6, 25);
+		idleAnimation = new Animation("rc/img/player", "idle", 2, 100);
+		runAnimation = new Animation("rc/img/player", "run", 6, 25);
 		
 		try {
-			jumpUpImg = ImageIO.read(new File("rc/player/anim/jump/jump-up.png"));
-			jumpFallImg = ImageIO.read(new File("rc/player/anim/jump/jump-fall.png"));
+			jumpUpImg = ImageIO.read(new File("rc/img/player/jump/jump-up.png"));
+			jumpFallImg = ImageIO.read(new File("rc/img/player/jump/jump-fall.png"));
 		}
 		catch (IOException ex) {
 			Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
