@@ -45,7 +45,7 @@ public class Animation {
 		frames = new BufferedImage[frameCount];
 		for (int i = 0; i < frameCount; i ++)
 			try {
-				frames[i] = ImageIO.read(new File(dir + "/" + name + "_" + i + ".png"));
+				frames[i] = ImageIO.read(new File(dir + "/" + name + "/frame-" + (i+1) + ".png"));
 			}
 			catch (IOException ex) {
 				Logger.getLogger(Animation.class.getName()).log(Level.SEVERE, null, ex);
