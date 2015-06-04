@@ -27,6 +27,7 @@ package bobby.scene;
 import bobby.main.KeyHandler;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -43,6 +44,10 @@ public class Player extends SceneObject {
 	private static final int maxJumpHeight = 120;
 	private int currentJumpHeight;
 	
+	// Animations
+	private Animation idleAnimation = new Animation("rc/player/anim", "idle", 2, 100);
+	private Animation runAnimation = new Animation("rc/player/anim", "run", 6, 25);
+	
 	public Player(SceneManager sm) {
 		super(sm, 50, 710, 90, 135);
 		
@@ -54,6 +59,7 @@ public class Player extends SceneObject {
 
 	@Override
 	public void update() {
+		status = IDLE;
 		if (KeyHandler.getKeyStatus(KeyEvent.VK_RIGHT) > 0) {
 			x ++;
 			status = RUN;
@@ -81,11 +87,23 @@ public class Player extends SceneObject {
 			if (currentJumpHeight == 0)
 				jumpStatus = 0;
 		}
+		
+		// next frame in animation
+		if (status == IDLE)
+			idleAnimation.nextFrame();
+		else if (status == RUN)
+			runAnimation.nextFrame();
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawRect(x, y, w, h);
+		BufferedImage image;
+		if (status == RUN)
+			image = runAnimation.getCurrentImage();
+		else // idle
+			image = idleAnimation.getCurrentImage();
+		
+		g.drawImage(image, x, y, w, h, null);
 	}
 	
 }
