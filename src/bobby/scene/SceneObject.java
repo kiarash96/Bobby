@@ -25,6 +25,7 @@
 package bobby.scene;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
@@ -32,18 +33,26 @@ import java.awt.Graphics;
  */
 public abstract class SceneObject {
 	
-	protected int x, y;
+	protected int x, y; // upper left corner of the bounding box
+	protected int w, h;
 	
 	protected SceneManager sm;
 	
-	public SceneObject(SceneManager sm, int x, int y) {
+	public SceneObject(SceneManager sm, int x, int y, int w, int h) {
 		this.sm = sm;
 		
 		this.x = x;
 		this.y = y;
+		
+		this.w = w;
+		this.h = h;
 	}
 	
 	public abstract void update();
 	public abstract void draw(Graphics g);
+	
+	public Rectangle getBoundingBox() {
+		return new Rectangle(x, y, w, h);
+	}
 	
 }

@@ -42,7 +42,7 @@ public class Background extends SceneObject {
 	BufferedImage image;
 	
 	public Background(SceneManager sm) {
-		super(sm, 0, 0);
+		super(sm, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		
 		try {
 			image = ImageIO.read(new File("rc/bg.png"));
@@ -59,7 +59,7 @@ public class Background extends SceneObject {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(image, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT, null);
+		g.drawImage(image, x, y, w, h, null);
 	}
 	
 }

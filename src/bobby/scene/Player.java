@@ -44,7 +44,7 @@ public class Player extends SceneObject {
 	private int currentJumpHeight;
 	
 	public Player(SceneManager sm) {
-		super(sm, 50, 710);
+		super(sm, 50, 710, 90, 135);
 		
 		status = IDLE;
 		
@@ -85,8 +85,7 @@ public class Player extends SceneObject {
 
 	@Override
 	public void draw(Graphics g) {
-		int w = 90, h = 135;
-		g.drawRect(x, y, 10, 50);
+		g.drawRect(x, y, w, h);
 	}
 	
 }
