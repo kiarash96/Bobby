@@ -22,36 +22,44 @@
  * THE SOFTWARE.
  */
 
-package bobby.state;
+package bobby.scene;
 
-import bobby.scene.Background;
-import bobby.scene.Player;
-import bobby.scene.SceneManager;
+import bobby.main.GamePanel;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class GameLevel extends GameState {
+public class Background extends SceneObject {
 
-	SceneManager sm;
+	BufferedImage image;
 	
-	public GameLevel() {
-		sm = new SceneManager();
+	public Background(SceneManager sm) {
+		super(sm, 0, 0);
 		
-		sm.add(new Background(sm));
-		sm.add(new Player(sm));
+		try {
+			image = ImageIO.read(new File("rc/bg.png"));
+		}
+		catch (IOException ex) {
+			Logger.getLogger(Background.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
-	
+
 	@Override
 	public void update() {
-		sm.update();
+		
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		sm.draw(g);
+		g.drawImage(image, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT, null);
 	}
 	
 }
