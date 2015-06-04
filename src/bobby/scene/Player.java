@@ -24,7 +24,6 @@
 
 package bobby.scene;
 
-import bobby.main.GamePanel;
 import bobby.main.KeyHandler;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -34,11 +33,42 @@ import java.awt.event.KeyEvent;
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
 public class Player extends SceneObject {
+	
+	private int status;
+	private static final int IDLE = 0;
+	private static final int RUN = 1;
+	
+	public Player(SceneManager sm) {
+		super(sm, 50, 710);
+		
+		status = IDLE;
+	}
 
+	@Override
+	public void update() {
+		if (KeyHandler.getKeyStatus(KeyEvent.VK_RIGHT) > 0) {
+			x ++;
+			status = RUN;
+		}
+		if (KeyHandler.getKeyStatus(KeyEvent.VK_LEFT) > 0) {
+			x --;
+			status = RUN;
+		}
+		
+		if (KeyHandler.getKeyStatus(KeyEvent.VK_SPACE) == KeyHandler.KEY_PRESS && JumpAction.isRunning == false)
+			new Thread(new JumpAction()).start();
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		int w = 90, h = 135;
+		g.drawRect(x, y, 10, 50);
+	}
+	
 	private class JumpAction extends Action {
 		
 		private int height = 0;
-		private static final int maxHeight = 100;
+		private static final int maxHeight = 120;
 
 		@Override
 		public void run() {
@@ -58,26 +88,6 @@ public class Player extends SceneObject {
 			isRunning = false;
 		}
 		
-	}
-	
-	public Player(SceneManager sm) {
-		super(sm, GamePanel.WIDTH/2, GamePanel.HEIGHT/2);
-	}
-
-	@Override
-	public void update() {
-		if (KeyHandler.getKeyStatus(KeyEvent.VK_RIGHT) > 0)
-			x ++;
-		if (KeyHandler.getKeyStatus(KeyEvent.VK_LEFT) > 0)
-			x --;
-		
-		if (KeyHandler.getKeyStatus(KeyEvent.VK_SPACE) == KeyHandler.KEY_PRESS && JumpAction.isRunning == false)
-			new Thread(new JumpAction()).start();
-	}
-
-	@Override
-	public void draw(Graphics g) {
-		g.drawRect(x, y, 10, 50);
 	}
 	
 }
