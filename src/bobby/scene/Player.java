@@ -28,6 +28,11 @@ import bobby.main.KeyHandler;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -46,9 +51,13 @@ public class Player extends SceneObject {
 	private int currentJumpHeight;
 	
 	// Animations
-	private Animation idleAnimation = new Animation("rc/player/anim", "idle", 2, 100);
-	private Animation runAnimation = new Animation("rc/player/anim", "run", 6, 25);
-			
+	private Animation idleAnimation;
+	private Animation runAnimation;
+	
+	// jump images
+	private BufferedImage jumpUpImg;
+	private BufferedImage jumpFallImg;
+		
 	public Player(SceneManager sm) {
 		super(sm, 50, 704, 90, 135);
 		
@@ -57,6 +66,18 @@ public class Player extends SceneObject {
 		
 		jumpStatus = 0;
 		currentJumpHeight = 0;
+		
+		idleAnimation = new Animation("rc/player/anim", "idle", 2, 100);
+		runAnimation = new Animation("rc/player/anim", "run", 6, 25);
+		
+		try {
+			jumpUpImg = ImageIO.read(new File("rc/player/anim/jump/jump-up.png"));
+			jumpFallImg = ImageIO.read(new File("rc/player/anim/jump/jump-fall.png"));
+		}
+		catch (IOException ex) {
+			Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
 	}
 
 	@Override
@@ -107,6 +128,11 @@ public class Player extends SceneObject {
 		else // idle
 			image = idleAnimation.getCurrentImage();
 		
+		if (jumpStatus == 1)
+			image = jumpUpImg;
+		else if (jumpStatus == 2)
+			image = jumpFallImg;
+	 	
 		g.drawImage(image, x + (direction == -1 ? w : 0), y, direction*w, h, null);
 	}
 	
