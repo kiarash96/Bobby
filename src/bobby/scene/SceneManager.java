@@ -24,7 +24,9 @@
 
 package bobby.scene;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 /**
  *
@@ -34,8 +36,16 @@ public class SceneManager {
 	
 	private ArrayList<SceneObject> list;
 	
+	private boolean showBB;
+	
 	public SceneManager() {
 		list = new ArrayList<>();
+		
+		showBB = false;
+	}
+	
+	public void showBoundingBox(boolean value) {
+		showBB = value;
 	}
 	
 	public void add(SceneObject so) {
@@ -52,8 +62,14 @@ public class SceneManager {
 	}
 	
 	public void draw(Graphics g) {
-		for (SceneObject object : list)
+		for (SceneObject object : list) {
 			object.draw(g);
+			if (showBB) {
+				Rectangle box = object.getBoundingBox();
+				g.setColor(Color.red);
+				g.drawRect(box.x, box.y, box.width, box.height);
+			}
+		}
 	}
 	
 }

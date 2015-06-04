@@ -42,6 +42,8 @@ public class GameLevel extends GameState {
 		
 		sm.add(new Background(sm));
 		sm.add(new Player(sm));
+		
+		sm.showBoundingBox(true);
 	}
 	
 	@Override
