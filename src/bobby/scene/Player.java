@@ -38,10 +38,18 @@ public class Player extends SceneObject {
 	private static final int IDLE = 0;
 	private static final int RUN = 1;
 	
+	// jump variables
+	private int jumpStatus; // 0 = not jumping		1 = going up		2 = falling down
+	private static final int maxJumpHeight = 120;
+	private int currentJumpHeight;
+	
 	public Player(SceneManager sm) {
 		super(sm, 50, 710);
 		
 		status = IDLE;
+		
+		jumpStatus = 0;
+		currentJumpHeight = 0;
 	}
 
 	@Override
@@ -55,39 +63,30 @@ public class Player extends SceneObject {
 			status = RUN;
 		}
 		
-		if (KeyHandler.getKeyStatus(KeyEvent.VK_SPACE) == KeyHandler.KEY_PRESS && JumpAction.isRunning == false)
-			new Thread(new JumpAction()).start();
+		if (KeyHandler.getKeyStatus(KeyEvent.VK_SPACE) == KeyHandler.KEY_PRESS && jumpStatus == 0)
+			jumpStatus = 1;
+			
+		// update jump
+		if (jumpStatus == 1) {
+			currentJumpHeight ++;
+			y --;
+
+			if (currentJumpHeight == maxJumpHeight)
+				jumpStatus = 2;
+		}
+		else if (jumpStatus == 2) {
+			currentJumpHeight --;
+			y ++;
+
+			if (currentJumpHeight == 0)
+				jumpStatus = 0;
+		}
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		int w = 90, h = 135;
 		g.drawRect(x, y, 10, 50);
-	}
-	
-	private class JumpAction extends Action {
-		
-		private int height = 0;
-		private static final int maxHeight = 120;
-
-		@Override
-		public void run() {
-			isRunning = true;
-			
-			while (height < maxHeight) {
-				height ++;
-				Player.this.y --;
-				yield();
-			}
-			while (height > 0) {
-				height --;
-				Player.this.y ++;
-				yield();
-			}
-			
-			isRunning = false;
-		}
-		
 	}
 	
 }
