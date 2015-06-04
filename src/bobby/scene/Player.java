@@ -36,6 +36,7 @@ import java.awt.image.BufferedImage;
 public class Player extends SceneObject {
 	
 	private int status;
+	private int direction;
 	private static final int IDLE = 0;
 	private static final int RUN = 1;
 	
@@ -47,11 +48,12 @@ public class Player extends SceneObject {
 	// Animations
 	private Animation idleAnimation = new Animation("rc/player/anim", "idle", 2, 100);
 	private Animation runAnimation = new Animation("rc/player/anim", "run", 6, 25);
-	
+			
 	public Player(SceneManager sm) {
-		super(sm, 50, 710, 90, 135);
+		super(sm, 50, 704, 90, 135);
 		
 		status = IDLE;
+		direction = +1;
 		
 		jumpStatus = 0;
 		currentJumpHeight = 0;
@@ -62,10 +64,12 @@ public class Player extends SceneObject {
 		status = IDLE;
 		if (KeyHandler.getKeyStatus(KeyEvent.VK_RIGHT) > 0) {
 			x ++;
+			direction = +1;
 			status = RUN;
 		}
 		if (KeyHandler.getKeyStatus(KeyEvent.VK_LEFT) > 0) {
 			x --;
+			direction = -1;
 			status = RUN;
 		}
 		
@@ -103,7 +107,7 @@ public class Player extends SceneObject {
 		else // idle
 			image = idleAnimation.getCurrentImage();
 		
-		g.drawImage(image, x, y, w, h, null);
+		g.drawImage(image, x + (direction == -1 ? w : 0), y, direction*w, h, null);
 	}
 	
 }
