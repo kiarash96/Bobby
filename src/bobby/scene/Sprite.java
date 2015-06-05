@@ -38,7 +38,7 @@ import javax.imageio.ImageIO;
  */
 public class Sprite {
 	
-	private static final String prePath = "rc/";
+	private static final String prePath = "rc/img";
 	
 	private BufferedImage[] frames;
 	private int currentFrame;
