@@ -24,6 +24,7 @@
 
 package bobby.scene;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -35,26 +36,56 @@ import javax.imageio.ImageIO;
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class Animation {
+public class Sprite {
+	
+	private static final String prePath = "rc/";
 	
 	private BufferedImage[] frames;
 	private int currentFrame;
 	private int delay, currentDelay;
 	
-	public Animation(String dir, String name, int frameCount, int delay) {
+	public Sprite() {
+		delay = 1;
+	}
+	
+	public void loadImage(String filepath) {
+		frames = new BufferedImage[1];
+		try {
+			frames[0] = ImageIO.read(new File(prePath + "/" + filepath));
+		}
+		catch (IOException ex) {
+			Logger.getLogger(Sprite.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		currentFrame = 0;
+		currentDelay = 0;
+	}
+	
+	public void loadAnimatoion(String dir, String name, String ext, int frameCount) {
 		frames = new BufferedImage[frameCount];
 		for (int i = 0; i < frameCount; i ++)
 			try {
-				frames[i] = ImageIO.read(new File(dir + "/" + name + "/frame-" + (i+1) + ".png"));
+				frames[i] = ImageIO.read(new File(prePath + "/" + dir + "/" + name + "/frame-" + (i+1) + "." + ext));
 			}
 			catch (IOException ex) {
-				Logger.getLogger(Animation.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(Sprite.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		
 		currentFrame = 0;
-		
-		this.delay = Math.max(delay, 1);
 		currentDelay = 0;
+	}
+	
+	public void scale(int width, int height) {
+		for (int i = 0; i < frames.length; i ++) {
+			Image tmp = frames[i].getScaledInstance(width, height, Image.SCALE_SMOOTH);
+			frames[i] = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			frames[i].createGraphics().drawImage(tmp, 0, 0, null);
+			frames[i].getGraphics().dispose();
+		}
+	}
+	
+	public void setDelay(int delay) {
+		this.delay = Math.max(delay, 1);
 	}
 	
 	public void nextFrame() {
