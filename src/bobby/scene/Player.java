@@ -55,9 +55,9 @@ public class Player extends SceneObject {
 	private Sprite runAnimation;
 	
 	// jump images
-	private BufferedImage jumpUpImg;
-	private BufferedImage jumpFallImg;
-		
+	private Sprite jumpUpSprite;
+	private Sprite jumpFallSprite;
+	
 	public Player(SceneManager sm) {
 		super(sm, 50, 704, 90, 135);
 		
@@ -66,6 +66,8 @@ public class Player extends SceneObject {
 		
 		jumpStatus = 0;
 		currentJumpHeight = 0;
+		
+		// load animations
 		
 		idleAnimation = new Sprite();
 		idleAnimation.loadAnimatoion("img/player", "idle", "png", 2);
@@ -77,14 +79,15 @@ public class Player extends SceneObject {
 		runAnimation.setDelay(25);
 		runAnimation.scale(w, h);
 		
-		try {
-			jumpUpImg = ImageIO.read(new File("rc/img/player/jump/jump-up.png"));
-			jumpFallImg = ImageIO.read(new File("rc/img/player/jump/jump-fall.png"));
-		}
-		catch (IOException ex) {
-			Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		// load jump images
 		
+		jumpUpSprite = new Sprite();
+		jumpUpSprite.loadImage("img/player/jump/jump-up.png");
+		jumpUpSprite.scale(w, h);
+		
+		jumpFallSprite = new Sprite();
+		jumpFallSprite.loadImage("img/player/jump/jump-fall.png");
+		jumpFallSprite.scale(w, h);
 	}
 
 	@Override
@@ -136,9 +139,9 @@ public class Player extends SceneObject {
 			image = idleAnimation.getCurrentImage();
 		
 		if (jumpStatus == 1)
-			image = jumpUpImg;
+			image = jumpUpSprite.getCurrentImage();
 		else if (jumpStatus == 2)
-			image = jumpFallImg;
+			image = jumpFallSprite.getCurrentImage();
 		
 		g.drawImage(image, x + (direction == -1 ? w : 0), y, direction*w, h, null);
 	}

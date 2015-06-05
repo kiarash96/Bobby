@@ -88,6 +88,10 @@ public class Sprite {
 		this.delay = Math.max(delay, 1);
 	}
 	
+	public void setFrame(int index) {
+		this.currentFrame = index;
+	}
+	
 	public void nextFrame() {
 		if (currentDelay == 0)
 			currentFrame = (currentFrame + 1) % frames.length;
