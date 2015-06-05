@@ -51,8 +51,8 @@ public class Player extends SceneObject {
 	private int currentJumpHeight;
 	
 	// Animations
-	private Animation idleAnimation;
-	private Animation runAnimation;
+	private Sprite idleAnimation;
+	private Sprite runAnimation;
 	
 	// jump images
 	private BufferedImage jumpUpImg;
@@ -67,8 +67,15 @@ public class Player extends SceneObject {
 		jumpStatus = 0;
 		currentJumpHeight = 0;
 		
-		idleAnimation = new Animation("rc/img/player", "idle", 2, 100);
-		runAnimation = new Animation("rc/img/player", "run", 6, 25);
+		idleAnimation = new Sprite();
+		idleAnimation.loadAnimatoion("img/player", "idle", "png", 2);
+		idleAnimation.setDelay(100);
+		idleAnimation.scale(w, h);
+		
+		runAnimation = new Sprite();
+		runAnimation.loadAnimatoion("img/player", "run", "png", 6);
+		runAnimation.setDelay(25);
+		runAnimation.scale(w, h);
 		
 		try {
 			jumpUpImg = ImageIO.read(new File("rc/img/player/jump/jump-up.png"));
@@ -132,7 +139,7 @@ public class Player extends SceneObject {
 			image = jumpUpImg;
 		else if (jumpStatus == 2)
 			image = jumpFallImg;
-	 	
+		
 		g.drawImage(image, x + (direction == -1 ? w : 0), y, direction*w, h, null);
 	}
 	
