@@ -75,6 +75,14 @@ public class GamePanel extends JPanel implements Runnable {
 			gsmThread = new Thread(gsm);
 			gsmThread.start();
 
+			// sleep to make sure everything is initialized
+			try {
+				Thread.sleep(1000);
+			}
+			catch (InterruptedException ex) {
+				Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+			}
+			
 			renderThread = new Thread(this);
 			renderThread.start();
 
