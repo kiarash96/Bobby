@@ -22,40 +22,38 @@
  * THE SOFTWARE.
  */
 
-package bobby.state;
+package bobby.scene.enemies;
 
-import bobby.scene.Background;
-import bobby.scene.Player;
 import bobby.scene.SceneManager;
-import bobby.scene.enemies.Zombie;
+import bobby.scene.SceneObject;
+import bobby.scene.Sprite;
 import java.awt.Graphics;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class GameLevel extends GameState {
+public class Zombie extends SceneObject {
 
-	SceneManager sm;
+	Sprite animation;
 	
-	public GameLevel() {
-		sm = new SceneManager();
+	public Zombie(SceneManager sm) {
+		super(sm, 650, 769, 60, 66);
 		
-		sm.add(new Background(sm));
-		sm.add(new Player(sm));
-		sm.add(new Zombie(sm));
-		
-		sm.showBoundingBox(true);
+		animation = new Sprite();
+		animation.loadAnimatoion("enemy/zombie/", "idle", "png", 2);
+		animation.scale(w, h);
+		animation.setDelay(75);
 	}
 	
 	@Override
 	public void update() {
-		sm.update();
+		animation.nextFrame();
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		sm.draw(g);
+		g.drawImage(animation.getCurrentImage(), x, y, null);
 	}
 	
 }
