@@ -35,10 +35,18 @@ import java.awt.Graphics;
  */
 public class Zombie extends SceneObject {
 
-	Sprite animation;
+	// moves from minX to maxX
+	private double minX, maxX;
+	private double dx;
+	
+	private Sprite animation;
 	
 	public Zombie(SceneManager sm) {
 		super(sm, 650, 769, 60, 66);
+		
+		minX = 650;
+		maxX = 780;
+		dx = +0.25;	
 		
 		animation = new Sprite();
 		animation.loadAnimatoion("enemy/zombie/", "idle", "png", 2);
@@ -48,6 +56,11 @@ public class Zombie extends SceneObject {
 	
 	@Override
 	public void update() {
+		if ((dx > 0 && x + dx > maxX) || (dx < 0 && x - dx < minX))
+			dx *= -1;
+		
+		x += dx;
+		
 		animation.nextFrame();
 	}
 
