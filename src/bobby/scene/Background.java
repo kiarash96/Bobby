@@ -59,7 +59,7 @@ public class Background extends SceneObject {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(image, x, y, w, h, null);
+		g.drawImage(image, (int)x, (int)y, w, h, null);
 	}
 	
 }

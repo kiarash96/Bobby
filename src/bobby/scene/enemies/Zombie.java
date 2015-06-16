@@ -53,7 +53,7 @@ public class Zombie extends SceneObject {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(animation.getCurrentImage(), x, y, null);
+		g.drawImage(animation.getCurrentImage(), (int)x, (int)y, null);
 	}
 	
 }

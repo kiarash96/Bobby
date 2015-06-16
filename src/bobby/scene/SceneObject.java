@@ -33,12 +33,12 @@ import java.awt.Rectangle;
  */
 public abstract class SceneObject {
 	
-	protected int x, y; // upper left corner of the bounding box
+	protected double x, y; // upper left corner of the bounding box
 	protected int w, h;
 	
 	protected SceneManager sm;
 	
-	public SceneObject(SceneManager sm, int x, int y, int w, int h) {
+	public SceneObject(SceneManager sm, double x, double y, int w, int h) {
 		this.sm = sm;
 		
 		this.x = x;
@@ -52,7 +52,7 @@ public abstract class SceneObject {
 	public abstract void draw(Graphics g);
 	
 	public Rectangle getBoundingBox() {
-		return new Rectangle(x, y, w, h);
+		return new Rectangle((int)x, (int)y, w, h);
 	}
 	
 }

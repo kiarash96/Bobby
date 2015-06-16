@@ -39,12 +39,14 @@ public class Player extends SceneObject {
 	private int direction;
 	private static final int IDLE = 0;
 	private static final int RUN = 1;
-	
+		
 	// jump variables
 	private int jumpStatus; // 0 = not jumping		1 = going up		2 = falling down
-	private static final int maxJumpHeight = 120;
-	private int currentJumpHeight;
+	private static final int maxJumpHeight = 150; 
+	private double currentJumpHeight;
 	
+	private static final double speed = 2.0;
+		
 	// Animations
 	private Sprite idleAnimation;
 	private Sprite runAnimation;
@@ -71,7 +73,7 @@ public class Player extends SceneObject {
 		
 		runAnimation = new Sprite();
 		runAnimation.loadAnimatoion("/player", "run", "png", 6);
-		runAnimation.setDelay(25);
+		runAnimation.setDelay(18);
 		runAnimation.scale(w, h);
 		
 		// load jump images
@@ -89,12 +91,12 @@ public class Player extends SceneObject {
 	public void update() {
 		status = IDLE;
 		if (KeyHandler.getKeyStatus(KeyEvent.VK_RIGHT) > 0) {
-			x ++;
+			x += speed;
 			direction = +1;
 			status = RUN;
 		}
 		if (KeyHandler.getKeyStatus(KeyEvent.VK_LEFT) > 0) {
-			x --;
+			x -= speed;
 			direction = -1;
 			status = RUN;
 		}
@@ -104,15 +106,15 @@ public class Player extends SceneObject {
 			
 		// update jump
 		if (jumpStatus == 1) {
-			currentJumpHeight ++;
-			y --;
+			currentJumpHeight += speed;
+			y -= speed;
 
 			if (currentJumpHeight == maxJumpHeight)
 				jumpStatus = 2;
 		}
 		else if (jumpStatus == 2) {
-			currentJumpHeight --;
-			y ++;
+			currentJumpHeight -= speed;
+			y += speed;
 
 			if (currentJumpHeight == 0)
 				jumpStatus = 0;
@@ -138,7 +140,7 @@ public class Player extends SceneObject {
 		else if (jumpStatus == 2)
 			image = jumpFallSprite.getCurrentImage();
 		
-		g.drawImage(image, x + (direction == -1 ? w : 0), y, direction*w, h, null);
+		g.drawImage(image, (int) (x + (direction == -1 ? w : 0)), (int)y, direction*w, h, null);
 	}
 	
 }
