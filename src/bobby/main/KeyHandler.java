@@ -27,7 +27,6 @@ package bobby.main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 import java.util.Queue;
 import javax.swing.KeyStroke;
 
@@ -64,8 +63,8 @@ public class KeyHandler implements KeyListener {
 			else if (keyStatus[i] == KEY_RELEASE)
 				keyStatus[i] = KEY_FREE;
 		
-		try {
-			KeyEventPair event = eventQ.remove();
+		KeyEventPair event = eventQ.poll();
+		if (event != null) {
 			if (event.action == KEY_PRESS && keyStatus[event.keycode] != KEY_DOWN) {
 				keyStatus[event.keycode] = KEY_PRESS;
 			}
@@ -73,9 +72,7 @@ public class KeyHandler implements KeyListener {
 				keyStatus[event.keycode] = KEY_RELEASE;
 			}
 		}
-		catch (NoSuchElementException excep) {
-			// it's okay! the queue is empty.
-		}
+		
 		
 	}
 	
