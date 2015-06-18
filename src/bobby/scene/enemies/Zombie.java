@@ -38,6 +38,7 @@ public class Zombie extends SceneObject {
 	// moves from minX to maxX
 	private double minX, maxX;
 	private double dx;
+	private int direction;
 	
 	private Sprite animation;
 	
@@ -46,7 +47,8 @@ public class Zombie extends SceneObject {
 		
 		minX = 650;
 		maxX = 780;
-		dx = +0.25;	
+		dx = +0.25;
+		direction = -1;
 		
 		animation = new Sprite();
 		animation.loadAnimatoion("enemy/zombie/", "idle", "png", 2);
@@ -56,8 +58,10 @@ public class Zombie extends SceneObject {
 	
 	@Override
 	public void update() {
-		if ((dx > 0 && x + dx > maxX) || (dx < 0 && x - dx < minX))
+		if ((dx > 0 && x + dx > maxX) || (dx < 0 && x - dx < minX)) {
 			dx *= -1;
+			direction *= -1;
+		}
 		
 		x += dx;
 		
@@ -66,7 +70,7 @@ public class Zombie extends SceneObject {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(animation.getCurrentImage(), (int)x, (int)y, null);
+		g.drawImage(animation.getCurrentImage(), (int) (x + (direction == -1 ? w : 0)), (int)y, direction*w, h, null);
 	}
 	
 }
