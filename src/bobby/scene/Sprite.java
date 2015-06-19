@@ -38,8 +38,6 @@ import javax.imageio.ImageIO;
  */
 public class Sprite {
 	
-	private static final String prePath = "rc/img";
-	
 	private BufferedImage[] frames;
 	private int currentFrame;
 	private int delay, currentDelay;
@@ -51,7 +49,7 @@ public class Sprite {
 	public void loadImage(String filepath) {
 		frames = new BufferedImage[1];
 		try {
-			frames[0] = ImageIO.read(new File(prePath + "/" + filepath));
+			frames[0] = ImageIO.read(new File(filepath));
 		}
 		catch (IOException ex) {
 			Logger.getLogger(Sprite.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,7 +63,7 @@ public class Sprite {
 		frames = new BufferedImage[frameCount];
 		for (int i = 0; i < frameCount; i ++)
 			try {
-				frames[i] = ImageIO.read(new File(prePath + "/" + dir + "/" + name + "/frame-" + (i+1) + "." + ext));
+				frames[i] = ImageIO.read(new File(dir + "/" + name + "/frame-" + (i+1) + "." + ext));
 			}
 			catch (IOException ex) {
 				Logger.getLogger(Sprite.class.getName()).log(Level.SEVERE, null, ex);
