@@ -41,11 +41,11 @@ public class Background extends SceneObject {
 
 	BufferedImage image;
 	
-	public Background(SceneManager sm) {
+	public Background(SceneManager sm, String addr) {
 		super(sm, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		
 		try {
-			image = ImageIO.read(new File("rc/bg.png"));
+			image = ImageIO.read(new File(addr));
 		}
 		catch (IOException ex) {
 			Logger.getLogger(Background.class.getName()).log(Level.SEVERE, null, ex);

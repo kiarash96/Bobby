@@ -55,8 +55,8 @@ public class Player extends SceneObject {
 	private Sprite jumpUpSprite;
 	private Sprite jumpFallSprite;
 	
-	public Player(SceneManager sm) {
-		super(sm, 50, 704, 90, 135);
+	public Player(SceneManager sm, double x, double y) {
+		super(sm, x, y, 90, 135); // hard-code w and h
 		
 		status = IDLE;
 		direction = +1;

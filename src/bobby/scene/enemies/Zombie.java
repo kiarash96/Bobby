@@ -42,13 +42,13 @@ public class Zombie extends SceneObject {
 	
 	private Sprite animation;
 	
-	public Zombie(SceneManager sm) {
-		super(sm, 650, 769, 60, 66);
+	public Zombie(SceneManager sm, double x, double y, double dist, double speed, int dir) {
+		super(sm, x, y, 60, 66);
 		
-		minX = 650;
-		maxX = 780;
-		dx = +0.25;
-		direction = -1;
+		minX = Math.min(x, x + dist);
+		maxX = Math.max(x, x + dist);
+		dx = speed;
+		direction = dir;
 		
 		animation = new Sprite();
 		animation.loadAnimatoion("enemy/zombie/", "idle", "png", 2);

@@ -41,9 +41,9 @@ public class GameLevel extends GameState {
 	public GameLevel() {
 		sm = new SceneManager();
 		
-		sm.add(new Background(sm));
-		sm.add(new Player(sm));
-		sm.add(new Zombie(sm));
+		sm.add(new Background(sm, "rc/bg.png"));
+		sm.add(new Player(sm, 100, 500));
+		// sm.add(new Zombie(sm));
 		
 		sm.showBoundingBox(true);
 	}
