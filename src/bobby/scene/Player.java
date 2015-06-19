@@ -25,6 +25,7 @@
 package bobby.scene;
 
 import bobby.main.KeyHandler;
+import bobby.state.GameLevel;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -55,8 +56,11 @@ public class Player extends SceneObject {
 	private Sprite jumpUpSprite;
 	private Sprite jumpFallSprite;
 	
-	public Player(SceneManager sm, double x, double y) {
-		super(sm, x, y, 90, 135); // hard-code w and h
+	public static int WIDTH = 90;
+	public static int HEIGHT = 135;
+	
+	public Player(SceneManager sm, double x) {
+		super(sm, x, GameLevel.GROUND_LEVEL - HEIGHT, WIDTH, HEIGHT);
 		
 		status = IDLE;
 		direction = +1;
@@ -100,6 +104,8 @@ public class Player extends SceneObject {
 			direction = -1;
 			status = RUN;
 		}
+		
+		// TODO: handle walls
 		
 		if (KeyHandler.getKeyStatus(KeyEvent.VK_SPACE) == KeyHandler.KEY_PRESS && jumpStatus == 0)
 			jumpStatus = 1;

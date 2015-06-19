@@ -27,6 +27,7 @@ package bobby.scene.enemies;
 import bobby.scene.SceneManager;
 import bobby.scene.SceneObject;
 import bobby.scene.Sprite;
+import bobby.state.GameLevel;
 import java.awt.Graphics;
 
 /**
@@ -42,13 +43,16 @@ public class Zombie extends SceneObject {
 	
 	private Sprite animation;
 	
-	public Zombie(SceneManager sm, double x, double y, double dist, double speed, int dir) {
-		super(sm, x, y, 60, 66);
+	public static int WIDTH = 60;
+	public static int HEIGHT = 66;
+	
+	public Zombie(SceneManager sm, double x, double dist, double speed) {
+		super(sm, x, GameLevel.GROUND_LEVEL - HEIGHT,  WIDTH, HEIGHT);
 		
 		minX = Math.min(x, x + dist);
 		maxX = Math.max(x, x + dist);
 		dx = speed;
-		direction = dir;
+		direction = (speed > 0 ? -1 : +1);
 		
 		animation = new Sprite();
 		animation.loadAnimatoion("rc/img/enemy/zombie/", "idle", "png", 2);
