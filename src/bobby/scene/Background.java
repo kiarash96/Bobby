@@ -26,12 +26,6 @@ package bobby.scene;
 
 import bobby.main.GamePanel;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -39,17 +33,13 @@ import javax.imageio.ImageIO;
  */
 public class Background extends SceneObject {
 
-	BufferedImage image;
+	Sprite image;
 	
 	public Background(SceneManager sm, String addr) {
 		super(sm, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		
-		try {
-			image = ImageIO.read(new File(addr));
-		}
-		catch (IOException ex) {
-			Logger.getLogger(Background.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		image = new Sprite();
+		image.loadImage(addr);
 	}
 
 	@Override
@@ -59,7 +49,7 @@ public class Background extends SceneObject {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(image, (int)x, (int)y, w, h, null);
+		g.drawImage(image.getCurrentImage(), (int)x, (int)y, w, h, null);
 	}
 	
 }
