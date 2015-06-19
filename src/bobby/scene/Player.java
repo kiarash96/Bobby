@@ -25,10 +25,12 @@
 package bobby.scene;
 
 import bobby.main.KeyHandler;
+import bobby.scene.enemies.Zombie;
 import bobby.state.GameLevel;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  *
@@ -36,8 +38,11 @@ import java.awt.image.BufferedImage;
  */
 public class Player extends SceneObject {
 	
+	private static final double speed = 1.0;
+	
 	private int status;
 	private int direction;
+	private int blink;
 	private static final int IDLE = 0;
 	private static final int RUN = 1;
 		
@@ -45,8 +50,6 @@ public class Player extends SceneObject {
 	private int jumpStatus; // 0 = not jumping		1 = going up		2 = falling down
 	private static final int maxJumpHeight = 150; 
 	private double currentJumpHeight;
-	
-	private static final double speed = 1.0;
 		
 	// Animations
 	private Sprite idleAnimation;
@@ -64,6 +67,7 @@ public class Player extends SceneObject {
 		
 		status = IDLE;
 		direction = +1;
+		blink = 0;
 		
 		jumpStatus = 0;
 		currentJumpHeight = 0;
@@ -125,6 +129,17 @@ public class Player extends SceneObject {
 				jumpStatus = 0;
 		}
 		
+		// intersect
+		ArrayList<SceneObject> list = sm.getList();
+		for (SceneObject object : list)
+			if (object instanceof Zombie // TODO: work for all types of enemies
+				&& object.getBoundingBox().intersects(this.getBoundingBox())) {
+				
+				x = 10;
+				blink = 100;
+			}
+				
+		
 		// next frame in animation
 		if (status == IDLE)
 			idleAnimation.nextFrame();
@@ -145,7 +160,9 @@ public class Player extends SceneObject {
 		else if (jumpStatus == 2)
 			image = jumpFallSprite.getCurrentImage();
 		
-		g.drawImage(image, (int) (x + (direction == -1 ? w : 0)), (int)y, direction*w, h, null);
+		blink = Math.max(blink - 1, 0);
+		if (blink % 10 < 5)
+			g.drawImage(image, (int) (x + (direction == -1 ? w : 0)), (int)y, direction*w, h, null);
 	}
 	
 }

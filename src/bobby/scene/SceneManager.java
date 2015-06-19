@@ -71,5 +71,9 @@ public class SceneManager {
 			}
 		}
 	}
+
+	ArrayList<SceneObject> getList() {
+		return list;
+	}
 	
 }

@@ -52,7 +52,7 @@ public abstract class SceneObject {
 	public abstract void draw(Graphics g);
 	
 	public Rectangle getBoundingBox() {
-		return new Rectangle((int)x, (int)y, w, h);
+		return new Rectangle((int)x + 10, (int)y + 10, w - 20, h - 20);
 	}
 	
 }
