@@ -24,10 +24,7 @@
 
 package bobby.state;
 
-import bobby.scene.Background;
-import bobby.scene.Player;
 import bobby.scene.SceneManager;
-import bobby.scene.enemies.Zombie;
 import java.awt.Graphics;
 
 /**
@@ -40,10 +37,6 @@ public class GameLevel extends GameState {
 	
 	public GameLevel() {
 		sm = new SceneManager();
-		
-		sm.add(new Background(sm, "rc/bg.png"));
-		sm.add(new Player(sm, 100, 500));
-		// sm.add(new Zombie(sm));
 		
 		sm.showBoundingBox(true);
 	}

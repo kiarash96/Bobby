@@ -67,23 +67,23 @@ public class Player extends SceneObject {
 		// load animations
 		
 		idleAnimation = new Sprite();
-		idleAnimation.loadAnimatoion("/player", "idle", "png", 2);
+		idleAnimation.loadAnimatoion("rc/img/player", "idle", "png", 2);
 		idleAnimation.setDelay(100);
 		idleAnimation.scale(w, h);
 		
 		runAnimation = new Sprite();
-		runAnimation.loadAnimatoion("/player", "run", "png", 6);
+		runAnimation.loadAnimatoion("rc/img/player", "run", "png", 6);
 		runAnimation.setDelay(18);
 		runAnimation.scale(w, h);
 		
 		// load jump images
 		
 		jumpUpSprite = new Sprite();
-		jumpUpSprite.loadImage("/player/jump/jump-up.png");
+		jumpUpSprite.loadImage("rc/img/player/jump/jump-up.png");
 		jumpUpSprite.scale(w, h);
 		
 		jumpFallSprite = new Sprite();
-		jumpFallSprite.loadImage("/player/jump/jump-fall.png");
+		jumpFallSprite.loadImage("rc/img/player/jump/jump-fall.png");
 		jumpFallSprite.scale(w, h);
 	}
 

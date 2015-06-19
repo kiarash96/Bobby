@@ -51,7 +51,7 @@ public class Zombie extends SceneObject {
 		direction = dir;
 		
 		animation = new Sprite();
-		animation.loadAnimatoion("enemy/zombie/", "idle", "png", 2);
+		animation.loadAnimatoion("rc/img/enemy/zombie/", "idle", "png", 2);
 		animation.scale(w, h);
 		animation.setDelay(75);
 	}
