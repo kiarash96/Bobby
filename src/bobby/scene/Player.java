@@ -46,7 +46,7 @@ public class Player extends SceneObject {
 	private static final int maxJumpHeight = 150; 
 	private double currentJumpHeight;
 	
-	private static final double speed = 2.0;
+	private static final double speed = 1.0;
 		
 	// Animations
 	private Sprite idleAnimation;
@@ -77,7 +77,7 @@ public class Player extends SceneObject {
 		
 		runAnimation = new Sprite();
 		runAnimation.loadAnimatoion("rc/img/player", "run", "png", 6);
-		runAnimation.setDelay(18);
+		runAnimation.setDelay(28);
 		runAnimation.scale(w, h);
 		
 		// load jump images
@@ -100,12 +100,11 @@ public class Player extends SceneObject {
 			status = RUN;
 		}
 		if (KeyHandler.getKeyStatus(KeyEvent.VK_LEFT) > 0) {
-			x -= speed;
+			if (x - speed >= 0.0)
+				x -= speed;
 			direction = -1;
 			status = RUN;
 		}
-		
-		// TODO: handle walls
 		
 		if (KeyHandler.getKeyStatus(KeyEvent.VK_SPACE) == KeyHandler.KEY_PRESS && jumpStatus == 0)
 			jumpStatus = 1;
