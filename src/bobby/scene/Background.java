@@ -33,13 +33,17 @@ import java.awt.Graphics;
  */
 public class Background extends SceneObject {
 
-	private Sprite image;
+	private Sprite[] layers;
 	
-	public Background(SceneManager sm, String addr) {
+	public Background(SceneManager sm, String path, String name, int cnt) {
 		super(sm, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		
-		image = new Sprite();
-		image.loadImage(addr);
+		layers = new Sprite[cnt];
+		for (int i = 0; i < layers.length; i ++) {
+			layers[i] = new Sprite();
+			layers[i].loadImage(path + "/" + name + "/layer-" + (i + 1) + ".png");
+			layers[i].scale(w*layers[i].getCurrentImage().getHeight()/h, h);
+		}
 	}
 
 	@Override
@@ -49,7 +53,8 @@ public class Background extends SceneObject {
 
 	@Override
 	public void draw(Graphics g) {
-		super.drawWithOffset(g, image.getCurrentImage(), x, y, w, h, +1);
+		for (int i = 0; i < layers.length; i ++)
+			super.drawWithOffset(g, layers[i].getCurrentImage(), sm.offset/(layers.length - i), x, y, layers[i].getCurrentImage().getWidth(), h, +1);
 	}
 	
 }

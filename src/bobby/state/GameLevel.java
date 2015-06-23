@@ -48,7 +48,7 @@ public class GameLevel extends GameState {
 	public GameLevel() {
 		sm = new SceneManager();
 		
-		sm.add(new Background(sm, "rc/img/bg.png"));
+		sm.add(new Background(sm, "rc/img/", "background", 3));
 		
 		sm.add(new Player(sm, GamePanel.WIDTH/3));
 		

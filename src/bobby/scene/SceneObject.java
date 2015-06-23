@@ -60,4 +60,8 @@ public abstract class SceneObject {
 		g.drawImage(img, (int) (x + (dir == -1 ? w : 0) - sm.offset), (int)y, dir*w, h, null);
 	}
 	
+	public void drawWithOffset(Graphics g, Image img, double offset, double x, double y, int w, int h, int dir) {
+		g.drawImage(img, (int) (x + (dir == -1 ? w : 0) - offset), (int)y, dir*w, h, null);
+	}
+	
 }
