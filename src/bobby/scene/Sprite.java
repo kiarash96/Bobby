@@ -41,9 +41,12 @@ public class Sprite {
 	private BufferedImage[] frames;
 	private int currentFrame;
 	private int delay, currentDelay;
+	private int baseFrame, baseDelay;
 	
 	public Sprite() {
-		delay = 1;
+		currentFrame = 0;
+		delay = 1; currentDelay = 0;
+		baseFrame = 0; baseDelay = 1;
 	}
 	
 	public void loadImage(String filepath) {
@@ -54,9 +57,6 @@ public class Sprite {
 		catch (IOException ex) {
 			Logger.getLogger(Sprite.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		
-		currentFrame = 0;
-		currentDelay = 0;
 	}
 	
 	public void loadAnimatoion(String dir, String name, String ext, int frameCount) {
@@ -68,9 +68,6 @@ public class Sprite {
 			catch (IOException ex) {
 				Logger.getLogger(Sprite.class.getName()).log(Level.SEVERE, null, ex);
 			}
-		
-		currentFrame = 0;
-		currentDelay = 0;
 	}
 	
 	public void scale(int width, int height) {
@@ -86,6 +83,11 @@ public class Sprite {
 		this.delay = Math.max(delay, 1);
 	}
 	
+	public void setBase(int index, int delay) {
+		baseFrame = index;
+		baseDelay = delay;
+	}
+	
 	public void setFrame(int index) {
 		this.currentFrame = index;
 	}
@@ -94,7 +96,7 @@ public class Sprite {
 		if (currentDelay == 0)
 			currentFrame = (currentFrame + 1) % frames.length;
 		
-		currentDelay = (currentDelay + 1) % delay;
+		currentDelay = (currentDelay + 1) % (currentFrame == baseFrame ? baseDelay : delay);
 	}
 	
 	public BufferedImage getCurrentImage() {
