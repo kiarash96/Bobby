@@ -46,7 +46,7 @@ public class Sprite {
 	public Sprite() {
 		currentFrame = 0;
 		delay = 1; currentDelay = 0;
-		baseFrame = 0; baseDelay = 1;
+		baseFrame = -1; baseDelay = 1;
 	}
 	
 	public void loadImage(String filepath) {
@@ -85,7 +85,7 @@ public class Sprite {
 	
 	public void setBase(int index, int delay) {
 		baseFrame = index;
-		baseDelay = delay;
+		baseDelay = Math.max(delay, 0);
 	}
 	
 	public void setFrame(int index) {
@@ -96,7 +96,10 @@ public class Sprite {
 		if (currentDelay == 0)
 			currentFrame = (currentFrame + 1) % frames.length;
 		
-		currentDelay = (currentDelay + 1) % (currentFrame == baseFrame ? baseDelay : delay);
+		if (baseFrame == -1)
+			currentDelay = (currentDelay + 1) % delay;
+		else
+			currentDelay = (currentDelay + 1) % (currentFrame == baseFrame ? baseDelay : delay);
 	}
 	
 	public BufferedImage getCurrentImage() {
