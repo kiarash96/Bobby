@@ -31,17 +31,18 @@ import java.awt.Graphics;
  */
 public class HUD {
 
-	int health;
+	private SceneManager sm; // reference to sm
+	
 	Sprite healthAnim;
 	
 	public HUD(SceneManager sm) {
-		health = 3;
+		this.sm = sm;
 		
 		healthAnim = new Sprite();
 		healthAnim.loadAnimatoion("rc/img/items/", "health", "png", 8);
 		healthAnim.setDelay(25);
 		healthAnim.setBase(0, 600);
-		healthAnim.scale(50, 50);
+		healthAnim.scale(50, 45);
 	}
 
 	public void update() {
@@ -49,8 +50,8 @@ public class HUD {
 	}
 	
 	public void draw(Graphics g) {
-		for (int i = 0; i < health; i ++)
-			g.drawImage(healthAnim.getCurrentImage(), 10 + 60 * i, 50, null);
+		for (int i = 0; i < sm.getPlayer().health; i ++)
+			g.drawImage(healthAnim.getCurrentImage(), 10 + 60 * i, 10, null);
 	}
 	
 }

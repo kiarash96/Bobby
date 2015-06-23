@@ -38,6 +38,8 @@ import java.util.ArrayList;
  */
 public class Player extends SceneObject {
 	
+	public int health;
+	
 	private static final double speed = 1.0;
 	
 	private int status;
@@ -64,6 +66,8 @@ public class Player extends SceneObject {
 	
 	public Player(SceneManager sm, double x) {
 		super(sm, x, GameLevel.GROUND_LEVEL - HEIGHT, WIDTH, HEIGHT);
+		
+		health = 3;
 		
 		status = IDLE;
 		direction = +1;
@@ -137,6 +141,8 @@ public class Player extends SceneObject {
 				
 				x = 10;
 				blink = 100;
+				
+				health --;
 			}
 				
 		

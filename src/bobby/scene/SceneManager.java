@@ -35,6 +35,7 @@ import java.util.ArrayList;
 public class SceneManager {
 	
 	private ArrayList<SceneObject> list;
+	private Player player; // reference
 	
 	private boolean showBB;
 	
@@ -50,9 +51,13 @@ public class SceneManager {
 	
 	public void add(SceneObject so) {
 		list.add(so);
+		if (so instanceof Player)
+			player = (Player)so;
 	}
 	
 	public void remove(SceneObject so) {
+		if (so instanceof Player)
+			player = null;
 		list.remove(so);
 	}
 
@@ -72,8 +77,14 @@ public class SceneManager {
 		}
 	}
 
-	ArrayList<SceneObject> getList() {
+	// getter functions
+	
+	public ArrayList<SceneObject> getList() {
 		return list;
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 	
 }
