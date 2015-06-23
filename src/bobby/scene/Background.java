@@ -65,7 +65,7 @@ public class Background extends SceneObject {
 	@Override
 	public void draw(Graphics g) {
 		for (int i = 0; i < layers.length; i ++) {
-			double offset = sm.offset/(layers.length - i);
+			double offset = sm.offset/((layers.length - i)*(layers.length - i)); // for parallex effect
 			int w = layers[i][0].img.getCurrentImage().getWidth();
 			Image img = layers[i][0].img.getCurrentImage();
 			
