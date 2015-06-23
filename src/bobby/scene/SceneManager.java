@@ -24,6 +24,7 @@
 
 package bobby.scene;
 
+import bobby.main.GamePanel;
 import bobby.main.KeyHandler;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -78,9 +79,11 @@ public class SceneManager {
 	public void update() {
 		// TODO: add conditions
 		if (KeyHandler.getKeyStatus(KeyEvent.VK_RIGHT) > 0)
+			if (player.x - offset >= GamePanel.WIDTH/2 - Player.WIDTH/2)
 			offset += scrollSpeed;
 		if (KeyHandler.getKeyStatus(KeyEvent.VK_LEFT) > 0)
-			offset --;
+			if (background.x - offset <= 0)
+				offset --;
 		
 		for (SceneObject object : list)
 			object.update();

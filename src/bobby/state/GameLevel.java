@@ -50,14 +50,14 @@ public class GameLevel extends GameState {
 		
 		sm.add(new Background(sm, "rc/img/", "background", 3));
 		
-		sm.add(new Player(sm, GamePanel.WIDTH/3));
-		
 		
 		sm.add(new Zombie(sm, 1300, -1300, 0.2));
 		sm.add(new Zombie(sm, 1500, -1500, 0.2));
 		sm.add(new Zombie(sm, 1700, -1700, 0.2));
 		
 		sm.add(new Bird(sm, 500, 400, 700, 300));
+		
+		sm.add(new Player(sm, GamePanel.WIDTH/3));
 		
 		hud = new HUD(sm);
 		

@@ -134,16 +134,18 @@ public class Player extends SceneObject {
 		}
 		
 		// intersect
-		ArrayList<SceneObject> list = sm.getList();
-		for (SceneObject object : list)
-			if (object instanceof Enemy
-				&& object.getBoundingBox().intersects(this.getBoundingBox())) {
-				
-				x = 10;
-				blink = 100;
-				
-				health --;
-			}
+		if (blink == 0) {
+			ArrayList<SceneObject> list = sm.getList();
+			for (SceneObject object : list)
+				if (object instanceof Enemy
+					&& object.getBoundingBox().intersects(this.getBoundingBox())) {
+
+					x = 10 + sm.offset;
+					blink = 100;
+
+					health --;
+				}
+		}
 				
 		
 		// next frame in animation
