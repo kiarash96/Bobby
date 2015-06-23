@@ -21,56 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package bobby.scene;
 
-package bobby.state;
-
-import bobby.scene.Background;
-import bobby.scene.HUD;
-import bobby.scene.Player;
-import bobby.scene.SceneManager;
-import bobby.scene.enemies.Zombie;
 import java.awt.Graphics;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class GameLevel extends GameState {
+public class HUD {
 
-	SceneManager sm;
+	int health;
+	Sprite healthAnim;
 	
-	public static int GROUND_LEVEL = 835;
-	
-	HUD hud;
-	
-	public GameLevel() {
-		sm = new SceneManager();
+	public HUD(SceneManager sm) {
+		health = 3;
 		
-		sm.add(new Background(sm, "rc/img/bg.png"));
-		
-		sm.add(new Player(sm, 10));
-		
-		
-		sm.add(new Zombie(sm, 750, -500, 0.2));
-		sm.add(new Zombie(sm, 950, -500, 0.2));
-		sm.add(new Zombie(sm, 1150, -500, 0.2));
-		
-		hud = new HUD(sm);
-		
-		// debug
-		// sm.showBoundingBox(true); 
+		healthAnim = new Sprite();
+		healthAnim.loadAnimatoion("rc/img/items/", "health", "png", 8);
+		healthAnim.setDelay(25);
+		healthAnim.setBase(0, 600);
+		healthAnim.scale(50, 50);
 	}
-	
-	@Override
+
 	public void update() {
-		sm.update();
-		hud.update();
+		healthAnim.nextFrame();
 	}
-
-	@Override
+	
 	public void draw(Graphics g) {
-		sm.draw(g);
-		hud.draw(g);
+		for (int i = 0; i < health; i ++)
+			g.drawImage(healthAnim.getCurrentImage(), 10 + 60 * i, 50, null);
 	}
 	
 }
