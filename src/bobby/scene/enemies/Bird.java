@@ -22,63 +22,70 @@
  * THE SOFTWARE.
  */
 
-package bobby.state;
+package bobby.scene.enemies;
 
-import bobby.scene.Background;
-import bobby.scene.HUD;
-import bobby.scene.Player;
 import bobby.scene.SceneManager;
-import bobby.scene.enemies.Bird;
-import bobby.scene.enemies.Enemy;
-import bobby.scene.enemies.Zombie;
+import bobby.scene.Sprite;
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class GameLevel extends GameState {
+public class Bird extends Enemy {
 
-	SceneManager sm;
+	double dx, dy;
 	
-	public static int GROUND_LEVEL = 835;
+	double bx, by;
+	int bw, bh;
 	
-	HUD hud;
+	Sprite anim;
+	int direction;
 	
-	public GameLevel() {
-		sm = new SceneManager();
+	public Bird(SceneManager sm, double bx, double by, int bw, int bh) {
+		super(sm, bx + Math.random()*(bw - 100), by + Math.random()*(bh - 75), 100, 75);
 		
-		sm.add(new Background(sm, "rc/img/bg.png"));
+		dx = +0.3;
+		dy = +0.3;
 		
-		sm.add(new Player(sm, 10));
+		this.bx = bx;
+		this.by = by;
+		this.bw = bw;
+		this.bh = bh;
 		
+		anim = new Sprite();
+		anim.loadAnimatoion("rc/img/enemy/bird/", "flying", "png", 8);
+		anim.setDelay(30);
+		anim.scale(this.w, this.h);
 		
-		sm.add(new Zombie(sm, 750, -700, 0.2));
-		sm.add(new Zombie(sm, 950, -700, 0.2));
-		sm.add(new Zombie(sm, 1150, -700, 0.2));
-		
-		sm.add(new Bird(sm, 500, 400, 700, 300));
-		
-		hud = new HUD(sm);
-		
-		// debug
-		// sm.showBoundingBox(true); 
+		direction = +1;
 	}
-	
+
 	@Override
 	public void update() {
-		sm.update();
-		hud.update();
 		
-		// TODO: game over
-		if (sm.getPlayer().health < 0)
-			System.err.println("GAME OVER!!!!!!!!!!");
+		
+		x += dx;
+		y += dy;
+		
+		if (x < bx || x + w > bx + bw) {
+			dx *= - 1;
+			direction *= -1;
+		}
+		if (y < by || y + h > by + bh)
+			dy *= -1;
+		
+		anim.nextFrame();
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		sm.draw(g);
-		hud.draw(g);
+		// debug
+		g.setColor(Color.RED);
+		g.drawRect((int)bx, (int)by, bw, bh);
+		
+		g.drawImage(anim.getCurrentImage(), (int)(x + (direction == -1 ? w : 0)), (int)y, direction*w, h, null);
 	}
 	
 }
