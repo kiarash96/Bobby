@@ -40,7 +40,7 @@ public class HUD {
 		
 		healthAnim = new Sprite();
 		healthAnim.loadAnimatoion("rc/img/items/", "health", "png", 8);
-		healthAnim.setDelay(25);
+		healthAnim.setDelay(15);
 		healthAnim.setBase(0, 600);
 		healthAnim.scale(50, 45);
 	}

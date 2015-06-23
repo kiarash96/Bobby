@@ -51,9 +51,9 @@ public class GameLevel extends GameState {
 		sm.add(new Player(sm, 10));
 		
 		
-		sm.add(new Zombie(sm, 750, -500, 0.2));
-		sm.add(new Zombie(sm, 950, -500, 0.2));
-		sm.add(new Zombie(sm, 1150, -500, 0.2));
+		sm.add(new Zombie(sm, 750, -700, 0.2));
+		sm.add(new Zombie(sm, 950, -700, 0.2));
+		sm.add(new Zombie(sm, 1150, -700, 0.2));
 		
 		hud = new HUD(sm);
 		
@@ -65,6 +65,10 @@ public class GameLevel extends GameState {
 	public void update() {
 		sm.update();
 		hud.update();
+		
+		// TODO: game over
+		if (sm.getPlayer().health < 0)
+			System.err.println("GAME OVER!!!!!!!!!!");
 	}
 
 	@Override
