@@ -21,59 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package bobby.scene.enemies;
 
 import bobby.scene.SceneManager;
-import bobby.scene.Sprite;
-import bobby.state.GameLevel;
-import java.awt.Graphics;
+import bobby.scene.SceneObject;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class Zombie extends Enemy {
 
-	// moves from minX to maxX
-	private double minX, maxX;
-	private double dx;
-	private int direction;
-	
-	private Sprite animation;
-	
-	public static int WIDTH = 60;
-	public static int HEIGHT = 66;
-	
-	public Zombie(SceneManager sm, double x, double dist, double speed) {
-		super(sm, x, GameLevel.GROUND_LEVEL - HEIGHT,  WIDTH, HEIGHT);
-		
-		minX = Math.min(x, x + dist);
-		maxX = Math.max(x, x + dist);
-		dx = speed;
-		direction = (speed > 0 ? -1 : +1);
-		
-		animation = new Sprite();
-		animation.loadAnimatoion("rc/img/enemy/zombie/", "idle", "png", 2);
-		animation.scale(w, h);
-		animation.setDelay(75);
-	}
-	
-	@Override
-	public void update() {
-		if ((dx > 0 && x + dx > maxX) || (dx < 0 && x - dx < minX)) {
-			dx *= -1;
-			direction *= -1;
-		}
-		
-		x += dx;
-		
-		animation.nextFrame();
-	}
+public abstract class Enemy extends SceneObject {
 
-	@Override
-	public void draw(Graphics g) {
-		g.drawImage(animation.getCurrentImage(), (int) (x + (direction == -1 ? w : 0)), (int)y, direction*w, h, null);
+	public Enemy(SceneManager sm, double x, double y, int w, int h) {
+		super(sm, x, y, w, h);
 	}
 	
 }

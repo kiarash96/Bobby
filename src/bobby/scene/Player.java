@@ -25,6 +25,7 @@
 package bobby.scene;
 
 import bobby.main.KeyHandler;
+import bobby.scene.enemies.Enemy;
 import bobby.scene.enemies.Zombie;
 import bobby.state.GameLevel;
 import java.awt.Graphics;
@@ -136,7 +137,7 @@ public class Player extends SceneObject {
 		// intersect
 		ArrayList<SceneObject> list = sm.getList();
 		for (SceneObject object : list)
-			if (object instanceof Zombie // TODO: work for all types of enemies
+			if (object instanceof Enemy
 				&& object.getBoundingBox().intersects(this.getBoundingBox())) {
 				
 				x = 10;
