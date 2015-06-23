@@ -33,7 +33,7 @@ import java.awt.Graphics;
  */
 public class Background extends SceneObject {
 
-	Sprite image;
+	private Sprite image;
 	
 	public Background(SceneManager sm, String addr) {
 		super(sm, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);

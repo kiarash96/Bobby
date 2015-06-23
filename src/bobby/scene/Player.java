@@ -45,7 +45,7 @@ public class Player extends SceneObject {
 	private int blink;
 	private static final int IDLE = 0;
 	private static final int RUN = 1;
-		
+	
 	// jump variables
 	private int jumpStatus; // 0 = not jumping		1 = going up		2 = falling down
 	private static final int maxJumpHeight = 150; 
@@ -81,7 +81,7 @@ public class Player extends SceneObject {
 		
 		runAnimation = new Sprite();
 		runAnimation.loadAnimatoion("rc/img/player", "run", "png", 6);
-		runAnimation.setDelay(28);
+		runAnimation.setDelay(24);
 		runAnimation.scale(w, h);
 		
 		// load jump images
