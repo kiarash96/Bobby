@@ -24,12 +24,12 @@
 
 package bobby.state;
 
+import bobby.main.GamePanel;
 import bobby.scene.Background;
 import bobby.scene.HUD;
 import bobby.scene.Player;
 import bobby.scene.SceneManager;
 import bobby.scene.enemies.Bird;
-import bobby.scene.enemies.Enemy;
 import bobby.scene.enemies.Zombie;
 import java.awt.Graphics;
 
@@ -50,12 +50,12 @@ public class GameLevel extends GameState {
 		
 		sm.add(new Background(sm, "rc/img/bg.png"));
 		
-		sm.add(new Player(sm, 10));
+		sm.add(new Player(sm, GamePanel.WIDTH/3));
 		
 		
-		sm.add(new Zombie(sm, 750, -700, 0.2));
-		sm.add(new Zombie(sm, 950, -700, 0.2));
-		sm.add(new Zombie(sm, 1150, -700, 0.2));
+		sm.add(new Zombie(sm, 1300, -1300, 0.2));
+		sm.add(new Zombie(sm, 1500, -1500, 0.2));
+		sm.add(new Zombie(sm, 1700, -1700, 0.2));
 		
 		sm.add(new Bird(sm, 500, 400, 700, 300));
 		

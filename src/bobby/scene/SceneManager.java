@@ -24,9 +24,11 @@
 
 package bobby.scene;
 
+import bobby.main.KeyHandler;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 /**
  *
@@ -35,14 +37,21 @@ import java.util.ArrayList;
 public class SceneManager {
 	
 	private ArrayList<SceneObject> list;
-	private Player player; // reference
+	
+	// references
+	private Player player;
+	private Background background;
+	
+	// for camera
+	public static double scrollSpeed = 1.0;
+	public double offset;
 	
 	private boolean showBB;
 	
 	public SceneManager() {
 		list = new ArrayList<>();
-		
 		showBB = false;
+		offset = 0.0;
 	}
 	
 	public void showBoundingBox(boolean value) {
@@ -51,17 +60,28 @@ public class SceneManager {
 	
 	public void add(SceneObject so) {
 		list.add(so);
+		
 		if (so instanceof Player)
 			player = (Player)so;
+		if (so instanceof Background)
+			background = (Background)so;
 	}
 	
 	public void remove(SceneObject so) {
 		if (so instanceof Player)
 			player = null;
+		if (so instanceof Background)
+			background = null;
 		list.remove(so);
 	}
 
 	public void update() {
+		// TODO: add conditions
+		if (KeyHandler.getKeyStatus(KeyEvent.VK_RIGHT) > 0)
+			offset += scrollSpeed;
+		if (KeyHandler.getKeyStatus(KeyEvent.VK_LEFT) > 0)
+			offset --;
+		
 		for (SceneObject object : list)
 			object.update();
 	}

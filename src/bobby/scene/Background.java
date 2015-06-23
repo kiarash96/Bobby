@@ -49,7 +49,7 @@ public class Background extends SceneObject {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(image.getCurrentImage(), (int)x, (int)y, w, h, null);
+		super.drawWithOffset(g, image.getCurrentImage(), x, y, w, h, +1);
 	}
 	
 }

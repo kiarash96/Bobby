@@ -26,7 +26,6 @@ package bobby.scene;
 
 import bobby.main.KeyHandler;
 import bobby.scene.enemies.Enemy;
-import bobby.scene.enemies.Zombie;
 import bobby.state.GameLevel;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -169,7 +168,7 @@ public class Player extends SceneObject {
 		
 		blink = Math.max(blink - 1, 0);
 		if (blink % 10 < 5)
-			g.drawImage(image, (int) (x + (direction == -1 ? w : 0)), (int)y, direction*w, h, null);
+			super.drawWithOffset(g, image, x, y, w, h, direction);
 	}
 	
 }

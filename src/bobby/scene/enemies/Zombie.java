@@ -73,7 +73,7 @@ public class Zombie extends Enemy {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(animation.getCurrentImage(), (int) (x + (direction == -1 ? w : 0)), (int)y, direction*w, h, null);
+		super.drawWithOffset(g, animation.getCurrentImage(), x, y, w, h, direction);
 	}
 	
 }

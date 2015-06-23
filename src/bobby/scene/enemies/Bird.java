@@ -85,7 +85,7 @@ public class Bird extends Enemy {
 		g.setColor(Color.RED);
 		g.drawRect((int)bx, (int)by, bw, bh);
 		
-		g.drawImage(anim.getCurrentImage(), (int)(x + (direction == -1 ? w : 0)), (int)y, direction*w, h, null);
+		super.drawWithOffset(g, anim.getCurrentImage(), x, y, w, h, direction);
 	}
 	
 }

@@ -25,6 +25,7 @@
 package bobby.scene;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 
 /**
@@ -53,6 +54,10 @@ public abstract class SceneObject {
 	
 	public Rectangle getBoundingBox() {
 		return new Rectangle((int)x + 10, (int)y + 10, w - 20, h - 20);
+	}
+	
+	public void drawWithOffset(Graphics g, Image img, double x, double y, int w, int h, int dir) {
+		g.drawImage(img, (int) (x + (dir == -1 ? w : 0) - sm.offset), (int)y, dir*w, h, null);
 	}
 	
 }
