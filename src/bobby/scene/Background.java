@@ -26,6 +26,7 @@ package bobby.scene;
 
 import bobby.main.GamePanel;
 import java.awt.Graphics;
+import java.awt.Image;
 
 /**
  *
@@ -33,16 +34,26 @@ import java.awt.Graphics;
  */
 public class Background extends SceneObject {
 
-	private Sprite[] layers;
+	private class Layer {
+		Sprite img;	
+		int x, y;
+	}
+	
+	Layer[][] layers;
 	
 	public Background(SceneManager sm, String path, String name, int cnt) {
 		super(sm, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		
-		layers = new Sprite[cnt];
+		layers = new Layer[cnt][2];
+		
 		for (int i = 0; i < layers.length; i ++) {
-			layers[i] = new Sprite();
-			layers[i].loadImage(path + "/" + name + "/layer-" + (i + 1) + ".png");
-			layers[i].scale(w*layers[i].getCurrentImage().getHeight()/h, h);
+			layers[i] = new Layer[2];
+			for (int j = 0; j < 2; j ++) {
+				layers[i][j] = new Layer();
+				layers[i][j].img = new Sprite();
+				layers[i][j].img.loadImage(path + "/" + name + "/layer-" + (i + 1) + ".png");
+				layers[i][j].img.scale(w*layers[i][j].img.getCurrentImage().getHeight()/h, h);
+			}
 		}
 	}
 
@@ -53,8 +64,20 @@ public class Background extends SceneObject {
 
 	@Override
 	public void draw(Graphics g) {
-		for (int i = 0; i < layers.length; i ++)
-			super.drawWithOffset(g, layers[i].getCurrentImage(), sm.offset/(layers.length - i), x, y, layers[i].getCurrentImage().getWidth(), h, +1);
+		for (int i = 0; i < layers.length; i ++) {
+			double offset = sm.offset/(layers.length - i);
+			int w = layers[i][0].img.getCurrentImage().getWidth();
+			Image img = layers[i][0].img.getCurrentImage();
+			
+			for (int j = 0; j < 2; j ++) {
+				super.drawWithOffset(g, img, offset, layers[i][j].x, layers[i][j].y,
+										w, h, +1);
+				
+				// continuesly put the second image after the first one
+				if (layers[i][j].x - offset + w < GamePanel.WIDTH)
+					layers[i][(j + 1)%2].x = layers[i][j].x + w;
+			}
+		}
 	}
 	
 }
