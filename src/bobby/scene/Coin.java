@@ -49,6 +49,11 @@ public class Coin extends SceneObject {
 
 	@Override
 	public void update() {
+		if (sm.getPlayer().getBoundingBox().intersects(this.getBoundingBox())) {
+			sm.getPlayer().score ++;
+			sm.remove(this);
+		}
+		
 		anim.nextFrame();
 	}
 

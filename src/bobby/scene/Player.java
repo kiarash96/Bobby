@@ -31,6 +31,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 public class Player extends SceneObject {
 	
 	public int health;
+	public int score;
 	
 	private static final double speed = 1.0;
 	
@@ -68,6 +70,7 @@ public class Player extends SceneObject {
 		super(sm, x, GameLevel.GROUND_LEVEL - HEIGHT, WIDTH, HEIGHT);
 		
 		health = 3;
+		score = 0;
 		
 		status = IDLE;
 		direction = +1;
@@ -135,7 +138,7 @@ public class Player extends SceneObject {
 		
 		// intersect
 		if (blink == 0) {
-			ArrayList<SceneObject> list = sm.getList();
+			CopyOnWriteArrayList<SceneObject> list = sm.getList();
 			for (SceneObject object : list)
 				if (object instanceof Enemy
 					&& object.getBoundingBox().intersects(this.getBoundingBox())) {

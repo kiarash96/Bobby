@@ -30,14 +30,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
 public class SceneManager {
 	
-	private ArrayList<SceneObject> list;
+	private CopyOnWriteArrayList<SceneObject> list;
 	
 	// references
 	private Player player;
@@ -50,7 +50,7 @@ public class SceneManager {
 	private boolean showBB;
 	
 	public SceneManager() {
-		list = new ArrayList<>();
+		list = new CopyOnWriteArrayList<>();
 		showBB = false;
 		offset = 0.0;
 	}
@@ -104,7 +104,7 @@ public class SceneManager {
 
 	// getter functions
 	
-	public ArrayList<SceneObject> getList() {
+	public CopyOnWriteArrayList<SceneObject> getList() {
 		return list;
 	}
 	
