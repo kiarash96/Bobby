@@ -37,23 +37,43 @@ public class GameStateManager implements Runnable {
 
 	public static final int sleepTime = 5;
 	
+	public static final int RUNNING = 1;
+	public static final int PAUSE = 2;
+	public static final int GAMEOVER = 3;
+	public static final int CLOSED = 4;
+	
+	int status;
+	
 	GameLevel level;
+	GameOverState gameOver;
 	
 	public GameStateManager() {
+		status = RUNNING;
 		level = new GameLevel();
+		gameOver = new GameOverState();
 	}
 	
 	public void update() {
-		level.update();
+		if (status == RUNNING) {
+			boolean res = level.update();
+			if (res == false)
+				status = GAMEOVER;
+		}
+		else if (status == GAMEOVER)
+			if (gameOver.update() == false)
+				status = CLOSED;
 	}
 
 	public void draw(Graphics g) {
 		level.draw(g);
+		
+		if (status == GAMEOVER)
+			gameOver.draw(g);
 	}
 
 	@Override
 	public void run() {
-		while (true) {
+		while (status == RUNNING) {
 			KeyHandler.update();
 			this.update();
 			
@@ -66,4 +86,7 @@ public class GameStateManager implements Runnable {
 		}
 	}
 	
+	public boolean isRunning() {
+		return status != CLOSED;
+	}
 }

@@ -76,13 +76,13 @@ public class GameLevel extends GameState {
 	}
 	
 	@Override
-	public void update() {
+	public boolean update() {
 		sm.update();
 		hud.update();
 		
-		// TODO: game over
 		if (sm.getPlayer().health < 0)
-			System.err.println("GAME OVER!!!!!!!!!!");
+			return false;
+		return true;
 	}
 
 	@Override

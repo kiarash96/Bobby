@@ -24,15 +24,36 @@
 
 package bobby.state;
 
+import bobby.main.GamePanel;
+import bobby.main.KeyHandler;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public abstract class GameState {
-	
-	public abstract boolean update();
-	public abstract void draw(Graphics g);
+public class GameOverState extends GameState {
+
+	@Override
+	public boolean update() {
+		// TODO: make it work!!
+		if (KeyHandler.getKeyStatus(KeyEvent.VK_ESCAPE) == KeyHandler.KEY_PRESS)
+			return false;
+		return true;
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		String text = "GAME OVER!";
+		g.setFont(new Font("TimesRoman", Font.BOLD, 64)); 
+		g.setColor(Color.BLACK);
+		Rectangle2D r =  g.getFontMetrics().getStringBounds(text, g);
+        g.drawString(text, (int)(GamePanel.WIDTH/2 - r.getWidth()/2), (int)(GamePanel.HEIGHT/2 - r.getHeight()/2));
+	}
 	
 }

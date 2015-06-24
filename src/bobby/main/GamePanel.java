@@ -92,7 +92,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	@Override
 	public void run() {
-		while (true) {
+		while (gsm.isRunning()) {
 			long start = System.nanoTime();
 			
 			Graphics g = image.getGraphics();
@@ -117,6 +117,7 @@ public class GamePanel extends JPanel implements Runnable {
 				Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
+		System.err.println("out!");
 	}
 
 }
