@@ -27,6 +27,7 @@ package bobby.scene;
 import bobby.main.GamePanel;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.Serializable;
 
 /**
  *
@@ -34,8 +35,8 @@ import java.awt.Image;
  */
 public class Background extends SceneObject {
 
-	private class Layer {
-		Sprite img;	
+	private class Layer implements Serializable {
+		Sprite img;
 		int x, y;
 	}
 	
