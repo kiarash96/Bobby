@@ -28,6 +28,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -36,9 +38,25 @@ import javax.imageio.ImageIO;
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class Sprite {
+public class Sprite implements Serializable {
 	
-	private BufferedImage[] frames;
+	transient private BufferedImage[] frames;
+	
+	// for loading images in deserialization
+	
+	int w, h;
+	
+	private static int TYPE_IMAGE = 1;
+	private static int TYPE_ANIMATION = 2;
+	private int type;
+	
+	String filepath;
+	
+	String dir, name, ext;
+	int frameCount;
+	
+	// frame and delay details
+	
 	private int currentFrame;
 	private int delay, currentDelay;
 	private int baseFrame, baseDelay;
@@ -50,6 +68,10 @@ public class Sprite {
 	}
 	
 	public void loadImage(String filepath) {
+		this.type = TYPE_IMAGE;
+		this.filepath = filepath;
+		this.frameCount = 1;
+		
 		frames = new BufferedImage[1];
 		try {
 			frames[0] = ImageIO.read(new File(filepath));
@@ -60,6 +82,12 @@ public class Sprite {
 	}
 	
 	public void loadAnimatoion(String dir, String name, String ext, int frameCount) {
+		this.type = TYPE_ANIMATION;
+		this.dir = dir;
+		this.name = name;
+		this.ext = ext;
+		this.frameCount = frameCount;
+		
 		frames = new BufferedImage[frameCount];
 		for (int i = 0; i < frameCount; i ++)
 			try {
@@ -77,6 +105,9 @@ public class Sprite {
 			frames[i].createGraphics().drawImage(tmp, 0, 0, null);
 			frames[i].getGraphics().dispose();
 		}
+		
+		w = width;
+		h = height;
 	}
 	
 	public void setDelay(int delay) {
@@ -106,4 +137,15 @@ public class Sprite {
 		return frames[currentFrame];
 	}
 	
+	// deserialization
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
+		
+		if (type == TYPE_IMAGE)
+			this.loadImage(filepath);
+		else if (type == TYPE_ANIMATION)
+			this.loadAnimatoion(dir, name, ext, frameCount);
+		
+		this.scale(w, h);
+	}
 }
