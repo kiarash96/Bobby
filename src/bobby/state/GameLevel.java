@@ -33,18 +33,21 @@ import bobby.scene.enemies.Bird;
 import bobby.scene.enemies.Spike;
 import bobby.scene.enemies.Zombie;
 import java.awt.Graphics;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class GameLevel extends GameState {
+public class GameLevel extends GameState implements Serializable {
 
 	SceneManager sm;
 	
 	public static int GROUND_LEVEL = 835;
 	
-	HUD hud;
+	transient HUD hud;
 	
 	public GameLevel() {
 		sm = new SceneManager();
@@ -91,4 +94,9 @@ public class GameLevel extends GameState {
 		hud.draw(g);
 	}
 	
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
+		
+		hud = new HUD(sm);
+	}
 }

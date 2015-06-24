@@ -49,7 +49,7 @@ public class KeyHandler implements KeyListener {
 	}
 		
 	private static Queue<KeyEventPair> eventQ = new LinkedList<>();
-	private static int[] keyStatus = new int[90 + 1];
+	private static int[] keyStatus = new int[120 + 1];
 	
 	public static final int KEY_FREE = 0;
 	public static final int KEY_PRESS = 1;
@@ -83,7 +83,7 @@ public class KeyHandler implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() <= 90)
+		if (e.getKeyCode() <= 120)
 			eventQ.add(new KeyEventPair(e.getKeyCode(), KEY_PRESS));
 		
 		//System.err.println("Pres: " + e.getKeyCode());
@@ -91,7 +91,7 @@ public class KeyHandler implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() <= 90)
+		if (e.getKeyCode() <= 120)
 			eventQ.add(new KeyEventPair(e.getKeyCode(), KEY_RELEASE));
 	}
 	

@@ -26,6 +26,12 @@ package bobby.state;
 
 import bobby.main.KeyHandler;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,6 +64,30 @@ public class GameStateManager implements Runnable {
 			boolean res = level.update();
 			if (res == false)
 				status = GAMEOVER;
+			
+			// save and load
+			
+			if (KeyHandler.getKeyStatus(KeyEvent.VK_F5) == KeyHandler.KEY_PRESS) { // save
+				try {
+					ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("save.dat"));
+					stream.writeObject(level);
+					stream.close();
+				}
+				catch (IOException ex) {
+					Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+			
+			if (KeyHandler.getKeyStatus(KeyEvent.VK_F6) == KeyHandler.KEY_PRESS) { // load
+				try {
+					ObjectInputStream stream = new ObjectInputStream(new FileInputStream("save.dat"));
+					level = (GameLevel) stream.readObject();
+					stream.close();
+				}
+				catch (IOException | ClassNotFoundException ex) {
+					Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
 		}
 		else if (status == GAMEOVER)
 			if (gameOver.update() == false)
