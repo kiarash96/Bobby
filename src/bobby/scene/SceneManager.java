@@ -30,12 +30,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.concurrent.CopyOnWriteArrayList;
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class SceneManager {
+public class SceneManager implements Serializable {
 	
 	private CopyOnWriteArrayList<SceneObject> list;
 	
@@ -47,7 +50,7 @@ public class SceneManager {
 	public static double scrollSpeed = 1.0;
 	public double offset;
 	
-	private boolean showBB;
+	transient private boolean showBB;
 	
 	public SceneManager() {
 		list = new CopyOnWriteArrayList<>();
@@ -110,6 +113,13 @@ public class SceneManager {
 	
 	public Player getPlayer() {
 		return player;
+	}
+	
+	// serialization
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
+		
+		showBB = false;
 	}
 	
 }
