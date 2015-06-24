@@ -50,7 +50,7 @@ public class Player extends SceneObject {
 	
 	// jump variables
 	private int jumpStatus; // 0 = not jumping		1 = going up		2 = falling down
-	private static final int maxJumpHeight = 150; 
+	private static final int maxJumpHeight = 160; 
 	private double currentJumpHeight;
 		
 	// Animations

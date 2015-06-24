@@ -30,6 +30,7 @@ import bobby.scene.HUD;
 import bobby.scene.Player;
 import bobby.scene.SceneManager;
 import bobby.scene.enemies.Bird;
+import bobby.scene.enemies.Spike;
 import bobby.scene.enemies.Zombie;
 import java.awt.Graphics;
 
@@ -56,6 +57,15 @@ public class GameLevel extends GameState {
 		sm.add(new Zombie(sm, 1700, -1700, 0.2));
 		
 		sm.add(new Bird(sm, 500, 400, 700, 300));
+		
+		sm.add(new Spike(sm, 2000, "a"));
+		
+		sm.add(new Zombie(sm, 2700, -550, 0.5));
+		sm.add(new Zombie(sm, 2800, -650, 0.5));
+		
+		sm.add(new Spike(sm, 3100, "b"));
+		
+		sm.add(new Bird(sm, 2800, 600, 800, 170));
 		
 		sm.add(new Player(sm, GamePanel.WIDTH/3));
 		

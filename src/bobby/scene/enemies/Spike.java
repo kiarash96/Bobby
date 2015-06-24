@@ -26,66 +26,43 @@ package bobby.scene.enemies;
 
 import bobby.scene.SceneManager;
 import bobby.scene.Sprite;
-import java.awt.Color;
+import static bobby.scene.enemies.Zombie.HEIGHT;
+import bobby.state.GameLevel;
 import java.awt.Graphics;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public class Bird extends Enemy {
-
-	double dx, dy;
+public class Spike extends Enemy {
 	
-	double bx, by;
-	int bw, bh;
+	Sprite image;
 	
-	Sprite anim;
-	int direction;
-	
-	public Bird(SceneManager sm, double bx, double by, int bw, int bh) {
-		super(sm, bx + Math.random()*(bw - 100), by + Math.random()*(bh - 75), 100, 75);
+	public Spike(SceneManager sm, double x, String name) {
+		super(sm, x, 0, 0, 0);
 		
-		dx = +0.3;
-		dy = +0.3;
+		if (name.equals("a")) {
+			w = 95; h = 100;
+		}
+		else if (name.equals("b")) {
+			w = 120; h = 70;
+		}
 		
-		this.bx = bx;
-		this.by = by;
-		this.bw = bw;
-		this.bh = bh;
+		y = GameLevel.GROUND_LEVEL - h;
 		
-		anim = new Sprite();
-		anim.loadAnimatoion("rc/img/enemy/bird/", "flying", "png", 8);
-		anim.setDelay(30);
-		anim.scale(this.w, this.h);
-		
-		direction = +1;
+		image = new Sprite();
+		image.loadImage("rc/img/enemy/spike/" + name + ".png");
+		image.scale(w, h);
 	}
 
 	@Override
 	public void update() {
 		
-		
-		x += dx;
-		y += dy;
-		
-		if (x < bx || x + w > bx + bw) {
-			dx *= - 1;
-			direction *= -1;
-		}
-		if (y < by || y + h > by + bh)
-			dy *= -1;
-		
-		anim.nextFrame();
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		// debug
-		// g.setColor(Color.RED);
-		// g.drawRect((int)bx, (int)by, bw, bh);
-		
-		super.drawWithOffset(g, anim.getCurrentImage(), x, y, w, h, direction);
+		super.drawWithOffset(g, image.getCurrentImage(), x, y, w, h, +1);
 	}
 	
 }
