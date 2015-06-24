@@ -141,7 +141,7 @@ public class Player extends SceneObject {
 					&& object.getBoundingBox().intersects(this.getBoundingBox())) {
 
 					x = 10 + sm.offset;
-					blink = 100;
+					blink = 501;
 
 					health --;
 				}
@@ -153,6 +153,9 @@ public class Player extends SceneObject {
 			idleAnimation.nextFrame();
 		else if (status == RUN)
 			runAnimation.nextFrame();
+		
+		// update blink
+		blink = Math.max(blink - 1, 0);
 	}
 
 	@Override
@@ -168,8 +171,7 @@ public class Player extends SceneObject {
 		else if (jumpStatus == 2)
 			image = jumpFallSprite.getCurrentImage();
 		
-		blink = Math.max(blink - 1, 0);
-		if (blink % 10 < 5)
+		if (blink % 50 < 25)
 			super.drawWithOffset(g, image, x, y, w, h, direction);
 	}
 	
