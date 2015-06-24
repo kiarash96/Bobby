@@ -27,12 +27,13 @@ package bobby.scene;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 /**
  *
  * @author Kiarash Korki <kiarash96@users.sf.net>
  */
-public abstract class SceneObject {
+public abstract class SceneObject implements Serializable {
 	
 	protected double x, y; // upper left corner of the bounding box
 	protected int w, h;
