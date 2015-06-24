@@ -23,6 +23,8 @@
  */
 package bobby.scene;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 /**
@@ -34,6 +36,7 @@ public class HUD {
 	private SceneManager sm; // reference to sm
 	
 	Sprite healthAnim;
+	Sprite scoreAnim;
 	
 	public HUD(SceneManager sm) {
 		this.sm = sm;
@@ -43,15 +46,27 @@ public class HUD {
 		healthAnim.setDelay(15);
 		healthAnim.setBase(0, 600);
 		healthAnim.scale(50, 45);
+		
+		scoreAnim = new Sprite();
+		scoreAnim.loadAnimatoion("rc/img/items/", "coin", "png", 10);
+		scoreAnim.setDelay(15);
+		scoreAnim.setBase(0, 600);
+		scoreAnim.scale(50, 50);
 	}
 
 	public void update() {
 		healthAnim.nextFrame();
+		scoreAnim.nextFrame();
 	}
 	
 	public void draw(Graphics g) {
 		for (int i = 0; i < sm.getPlayer().health; i ++)
 			g.drawImage(healthAnim.getCurrentImage(), 10 + 60 * i, 10, null);
+		
+		g.drawImage(scoreAnim.getCurrentImage(), 10, 70, null);
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 45)); 
+		g.setColor(Color.BLACK);
+		g.drawString(Integer.toString(sm.getPlayer().score), 70, 110);
 	}
 	
 }
